@@ -18,7 +18,7 @@ public class Produit {
    public static final String MSG_ERR_CAT_INVALIDE = "Erreur, categorie invalide";
    public static final String MSG_ERR_DESC_INVALIDE = "Erreur, description invalide";
    public static final String MSG_ERR_QTE_INVALIDE = "Erreur, quantite invalide";
-   public static final String MSG_ERR_PRIX_INVALIDE = "Erreur, quantite invalide";
+   public static final String MSG_ERR_PRIX_INVALIDE = "Erreur, prix invalide";
    
    //Constante pour arrondir a deux decimales. Utilisée dans la methode toString();
    public static final DecimalFormat DEC_FORM = new DecimalFormat("0.00");
