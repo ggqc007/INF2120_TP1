@@ -163,9 +163,16 @@ public abstract class Utilisateur {
     /**
      * REDEFINITION METHODES
      */
+    /**
+     * Deux utilisateurs sont considérés comme étant égaux s’ils ont le même id
+     * 
+     * @param autreUtilisateur un utilisateur a comparer
+     * @return true si le id de l'utilisateur en parametre est identique a celui de l'instance
+     */
     @Override
     public boolean equals(Object autreUtilisateur) {
         return autreUtilisateur != null
+                && getClass() == autreUtilisateur.getClass()
                 && this.getId() == ((Utilisateur) autreUtilisateur).getId();
     }
     /*
@@ -189,6 +196,7 @@ public abstract class Utilisateur {
      * @return une representation de cet utilisateur sous forme d'une chaine de
      * caracteres.
      */
+    @Override
     public String toString() {
         return id + " : " + pseudo + " - " + motPasse + " - " + courriel
                 + " - " + nbrEval;
@@ -217,9 +225,10 @@ public abstract class Utilisateur {
      * des évaluations de cet utilisateur.
      *
      * @param evalScore Note d'évaluation
-     * @throws java.lang.Exception InvalideEvalException Cette méthode leve une Exception (type
-     * Exception) contenant le message Utilisateur.MSG_ERR_EVAL_3 lorsque
-     * l’évaluation donnée en paramètre n’est pas valide.
+     * @throws java.lang.Exception InvalideEvalException Cette méthode leve une
+     * Exception (type Exception) contenant le message
+     * Utilisateur.MSG_ERR_EVAL_3 lorsque l’évaluation donnée en paramètre n’est
+     * pas valide.
      */
     public void ajouterEvaluation(int evalScore) throws Exception {
         if (evalScore < EVAL_MIN || evalScore > EVAL_MAX) {
