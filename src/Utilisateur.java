@@ -28,6 +28,8 @@ public abstract class Utilisateur {
     public static final String MSG_ERR_ACHAT = "Erreur, ce produit n'est vendu par "
             + "aucun fournisseur.";
 
+    private static final int EVAL_MIN = 1;
+    private static final int EVAL_MAX = 5;
     //longueur des tableaux
     public static final int LONG_TAB = 100; //longueur des tableaux
 
@@ -106,7 +108,9 @@ public abstract class Utilisateur {
      * (respectivement fournisseur) en lui attribuant une note d’appréciation
      * (une évaluation) basée sur l’expérience d’une transaction conclue avec ce
      * consommateur (respectivement fournisseur). Une évaluation valide est une
-     * note comprise entre 1 et 5 où 5 constitue la meilleure évaluation.      *
+     * note comprise entre 1 et 5 où 5 constitue la meilleure évaluation.
+     *
+     *
      * @param user l’utilisateur évalué (type Utilisateur)
      * @param evalScore l’évaluation donnée à l’utilisateur
      *
@@ -200,21 +204,30 @@ public abstract class Utilisateur {
      * @return Moyenne des évaluations ou 0 si pas d'évaluations.
      */
     public double evaluationMoyenne() {
-        //(double)Math.round(moyenne * 100) / 100;
-        return 1.1;
+        double totalScore = 0;
+
+        for (int i = 0; i < evaluations.length; i++) {
+            totalScore = totalScore + evaluations[i];
+        }
+        return (double) Math.round((totalScore / nbrEval) * 100) / 100;
     }
 
     /**
      * Cette méthode permet d’ajouter une nouvelle évaluation reçue au tableau
-     * des évaluations de cet utilisateur.      *
-     * @param evalScore Note d'évaluation
+     * des évaluations de cet utilisateur.
      *
-     * Cette méthode leve une Exception (type Exception) contenant le message
-     * Utilisateur.MSG_ERR_EVAL_3 lorsque l’évaluation donnée en paramètre n’est
-     * pas valide.
+     * @param evalScore Note d'évaluation
+     * @throws java.lang.Exception InvalideEvalException Cette méthode leve une Exception (type
+     * Exception) contenant le message Utilisateur.MSG_ERR_EVAL_3 lorsque
+     * l’évaluation donnée en paramètre n’est pas valide.
      */
-    public void ajouterEvaluation(int evalScore) {
-
+    public void ajouterEvaluation(int evalScore) throws Exception {
+        if (evalScore < EVAL_MIN || evalScore > EVAL_MAX) {
+            throw new Exception(MSG_ERR_EVAL_3);
+        } else {
+            evaluations[nbrEval] = evalScore;
+            nbrEval++;
+        }
     }
 
 }
