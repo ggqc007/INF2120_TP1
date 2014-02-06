@@ -118,8 +118,10 @@ public abstract class Utilisateur {
      * l’utilisateur évalué n’a jamais conclu de transaction avec l’utilisateur
      * qui l’évalue ou lorsque 2) l’évaluation donnée en paramètre n’est pas
      * valide
+     * 
+     * @throws java.lang.Exception
      */
-    public abstract void evaluer(Utilisateur user, int evalScore);
+    public abstract void evaluer(Utilisateur user, int evalScore) throws Exception;
 
     /**
      * GETTERS ET SETTERS

@@ -5,14 +5,21 @@ public class INF2120Tp1 {
         
         // test methode moyenne
         //System.out.println(evaluationMoyenne());
-
+        
+        System.out.println(testRetourNull());
+        Produit[] achats = new Produit[Utilisateur.LONG_TAB];
+        System.out.println("debug: "+ achats[0]);
     }
 
     
     
     
     
-    
+    public static String[] testRetourNull() {
+        String[] test = null;
+        //String[] test = new String[5];
+        return test;
+    }
     
     
     public static double evaluationMoyenne() {
