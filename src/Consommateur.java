@@ -82,7 +82,7 @@ public class Consommateur extends Utilisateur {
      * note comprise entre 1 et 5 où 5 constitue la meilleure évaluation.
      *
      *
-     * @param user l’utilisateur évalué (type Utilisateur)
+     * @param fournisseur l’utilisateur évalué (type Utilisateur)
      * @param evalScore l’évaluation donnée à l’utilisateur
      *
      * Cette méthode leve une Exception (type Exception) lorsque 1)
@@ -92,32 +92,77 @@ public class Consommateur extends Utilisateur {
      * @throws java.lang.Exception
      */
     @Override
-    public void evaluer(Utilisateur user, int evalScore) throws ClassCastException, NullPointerException, Exception {
-        //TODO !!!!!!!!!!!!!!!!!!!!
-
+    public void evaluer(Utilisateur fournisseur, int evalScore) throws ClassCastException, NullPointerException, Exception {
+        if (fournisseur == null) {
+            throw new NullPointerException();
+        } else if (!(fournisseur instanceof Fournisseur)) {
+            throw new ClassCastException();
+        } else if (evalScore < 0 || evalScore > 5) {
+            throw new Exception(Utilisateur.MSG_ERR_EVAL_3);
+        } else if (fournisseur != null) {
+            // TODO ... trouvé comment savoir si consomateur a deja acheté un produit au fournisseur.. 
+            // surement une methode a venir dans fournisseur???
+        } else {
+            fournisseur.ajouterEvaluation(evalScore);
+        }
     }
-    
-    
-    
-    
+
+    public void acheter(Produit produit, int quantite) throws Exception {
+        if (produit == null) {
+            throw new ExceptionProduitInvalide();
+        } else if (produit.getIdFournisseur() == 0) {
+            throw new Exception(Utilisateur.MSG_ERR_ACHAT);
+        } else if (quantite <= 0 || quantite > produit.getQuantite()) {
+            throw new Exception(Utilisateur.MSG_ERR_QTE);
+        } else {
+            // on ajoute une copie du produit!
+            achats[nbrAchats] = new Produit(produit);
+            achats[nbrAchats].setQuantite(quantite);
+            nbrAchats = nbrAchats + 1;
+        }
+    }
+
+    public int[] fournisseur() {
+        int[] tabFournisseursUtilise = null;
+        // C'est beau de retourner la liste mais a quekl moment jy ajoute une fournisseur???
+
+        return tabFournisseursUtilise;
+    }
+
+    /**
+     * Retourne une representation sous forme de chaine de caracteres de ce
+     * consommateur.
+     *
+     * @return une representation sous forme de chaine de caracteres de ce
+     * consommateur.
+     */
+    @Override
+    public String toString() {
+        return super.toString() + " - " + nbrAchats;
+    }
+
     /**
      * Getter & Setters
-     * @return 
+     * 
+     */
+    
+    /**
+     * @return
      */
     public Produit[] getAchats() {
         return achats;
     }
-    
+
     public int getNbrAchats() {
         return nbrAchats;
     }
-    
+
     /**
      * METHODES DE CLASSE PRIVE
      */
     private boolean stringEstDansTab(String[] tab, String item) {
         boolean foundItem = false;
-        
+
         for (int i = 0; i < tab.length; i++) {
             if (tab[i].equalsIgnoreCase(item)) {
                 foundItem = true;
