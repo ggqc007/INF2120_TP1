@@ -52,22 +52,19 @@ public class Consommateur extends Utilisateur {
      */
     @Override
     public String[] compilerProfil() {
-        String[] categoriesAchete = null;
+        String[] categoriesAchete = new String[Utilisateur.LONG_TAB];
         int categoriesUniqueTrouve = 0;
 
-        if (achats[0] != null) {
-            categoriesAchete = new String[Utilisateur.LONG_TAB];
-
-            for (int i = 0, j = 0; i < achats.length; i++) {
-                //if (achats[i] != null && stringEstDansTab(categoriesAchete, achats[i].getCategorie())) {
-                    if (achats[i] != null && TabUtils.elemEstDansTab(achats[i].getCategorie(), categoriesAchete)) {
-                    categoriesAchete[j] = achats[i].getCategorie();
-                    categoriesUniqueTrouve++;
-                }
+        for (int i = 0; i < achats.length; i++) {
+            if (achats[i] instanceof Produit && !TabUtils.elemEstDansTab(achats[i].getCategorie(), categoriesAchete)) {
+                categoriesAchete[categoriesUniqueTrouve] = achats[i].getCategorie();
+                categoriesUniqueTrouve = categoriesUniqueTrouve + 1;
             }
         }
-        // Ajuste longueur du tableau avant le retour...
-        if (categoriesAchete != null) {
+        // Mise a null si rien trouve ou ajuste longueur du tableau avant le retour...
+        if (categoriesUniqueTrouve == 0) {
+            categoriesAchete = null;
+        } else {
             categoriesAchete = TabUtils.copieTab(categoriesAchete, categoriesUniqueTrouve);
         }
         return categoriesAchete;
@@ -75,12 +72,12 @@ public class Consommateur extends Utilisateur {
 
     /**
      * Cette méthode permet à un utilisateur d’évaluer un autre utilisateur. En
- effet, les utilisateurs du site Amizone peuvent s’évaluer entre eux. Un
- fournisseurs (respectivement consommateur) peut évaluer un consommateur
- (respectivement fournisseurs) en lui attribuant une note d’appréciation
- (une évaluation) basée sur l’expérience d’une transaction conclue avec ce
- consommateur (respectivement fournisseurs). Une évaluation valide est une
- note comprise entre 1 et 5 où 5 constitue la meilleure évaluation.
+     * effet, les utilisateurs du site Amizone peuvent s’évaluer entre eux. Un
+     * fournisseurs (respectivement consommateur) peut évaluer un consommateur
+     * (respectivement fournisseurs) en lui attribuant une note d’appréciation
+     * (une évaluation) basée sur l’expérience d’une transaction conclue avec ce
+     * consommateur (respectivement fournisseurs). Une évaluation valide est une
+     * note comprise entre 1 et 5 où 5 constitue la meilleure évaluation.
      *
      *
      * @param fournisseur l’utilisateur évalué (type Utilisateur)
@@ -124,13 +121,13 @@ public class Consommateur extends Utilisateur {
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public Integer[] fournisseurs() {
         Integer[] tabFournisseursUtilise = null;
         int nbrFournisseurUtilise = 0;
-        
+
         for (int i = 0; i < achats.length; i++) {
             if (achats[i] instanceof Produit) {
                 // initialiste tab
@@ -144,7 +141,7 @@ public class Consommateur extends Utilisateur {
                 }
             }
         }
-        
+
         // ajuste longueur du tab
         if (tabFournisseursUtilise != null) {
             tabFournisseursUtilise = TabUtils.copieTab(tabFournisseursUtilise, nbrFournisseurUtilise);
@@ -166,9 +163,8 @@ public class Consommateur extends Utilisateur {
 
     /**
      * Getter & Setters
-     * 
+     *
      */
-    
     /**
      * @return
      */
@@ -184,28 +180,27 @@ public class Consommateur extends Utilisateur {
      * METHODES DE CLASSE PRIVE
      */
     /*
-    private boolean stringEstDansTab(String[] tab, String item) {
-        boolean foundItem = false;
+     private boolean stringEstDansTab(String[] tab, String item) {
+     boolean foundItem = false;
 
-        for (int i = 0; i < tab.length; i++) {
-            if (tab[i].equalsIgnoreCase(item)) {
-                foundItem = true;
-            }
-        }
-        return foundItem;
-    }
-    */
- 
+     for (int i = 0; i < tab.length; i++) {
+     if (tab[i].equalsIgnoreCase(item)) {
+     foundItem = true;
+     }
+     }
+     return foundItem;
+     }
+     */
     /*
-        private boolean intEstDansTab(int[] tab, int item) {
-        boolean foundItem = false;
+     private boolean intEstDansTab(int[] tab, int item) {
+     boolean foundItem = false;
 
-        for (int i = 0; i < tab.length; i++) {
-            if (tab[i] == item) {
-                foundItem = true;
-            }
-        }
-        return foundItem;
-    }
-    */
+     for (int i = 0; i < tab.length; i++) {
+     if (tab[i] == item) {
+     foundItem = true;
+     }
+     }
+     return foundItem;
+     }
+     */
 }
