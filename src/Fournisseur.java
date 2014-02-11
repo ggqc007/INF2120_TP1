@@ -13,18 +13,18 @@ public class Fournisseur extends Utilisateur {
     /**
      * Construit un Fournisseur avec le pseudo, le motPasse et le courriel
      * donnes en parametres. L'attribut id (numero unique) est assigne
-     * automatiquement. La longueur du tableau des produits vendus par ce
-     * fournisseur est initialisee a Utilisateur.LONG_TAB et nbrProduits est a
-     * 0. La longueur du tableau evaluations est initialisee a
-     * Utilisateur.LONG_TAB et nbrEval est a 0.
+ automatiquement. La longueur du tableau des produits vendus par ce
+ fournisseurs est initialisee a Utilisateur.LONG_TAB et nbrProduits est a
+ 0. La longueur du tableau evaluations est initialisee a
+ Utilisateur.LONG_TAB et nbrEval est a 0.
      *
-     * @param pseudo le nom d'utilisateur (pseudonyme) de ce fournisseur.
-     * @param motPasse le mot de passe de ce fournisseur
-     * @param courriel le courriel de ce fournisseur
-     *
-     * ANTECEDENTS : le pseudo, le motPasse et le courriel sont des valeurs
-     * valides non vides et non egales a null. On suppose aussi que ces valeurs
-     * sont uniques pour chaque utilisateur.
+     * @param pseudo le nom d'utilisateur (pseudonyme) de ce fournisseurs.
+     * @param motPasse le mot de passe de ce fournisseurs
+     * @param courriel le courriel de ce fournisseurs
+
+ ANTECEDENTS : le pseudo, le motPasse et le courriel sont des valeurs
+ valides non vides et non egales a null. On suppose aussi que ces valeurs
+ sont uniques pour chaque utilisateur.
      */
     public Fournisseur(String pseudo, String motPasse, String courriel) {
         super(pseudo, motPasse, courriel);
@@ -35,7 +35,7 @@ public class Fournisseur extends Utilisateur {
     /**
      * Constructeur de copie. Pour tests seulement.
      *
-     * @param fournisseur le fournisseur dont on veut une copie.
+     * @param fournisseur le fournisseurs dont on veut une copie.
      */
     public Fournisseur(Fournisseur fournisseur) {
         super(fournisseur);
@@ -80,9 +80,9 @@ public class Fournisseur extends Utilisateur {
             throw new ClassCastException();
         } else if (evalScore < 0 || evalScore > 5) {
             throw new Exception(Utilisateur.MSG_ERR_EVAL_3);
-        } else if (!(TabUtils.elemEstDansTab(this.getId(), ((Consommateur)consommateur).fournisseur()))) {
+        } else if (!(TabUtils.elemEstDansTab(this.getId(), ((Consommateur)consommateur).fournisseurs()))) {
             // si n'est pas dans tableau... j'ai fait un cast vue que consommateur en parametre est de type Utilisateur
-            // donc methode fournisseur() n'etait pas visible...
+            // donc methode fournisseurs() n'etait pas visible...
             throw new Exception(Utilisateur.MSG_ERR_EVAL_1);
         } else {
             consommateur.ajouterEvaluation(evalScore);

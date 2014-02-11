@@ -75,12 +75,12 @@ public class Consommateur extends Utilisateur {
 
     /**
      * Cette méthode permet à un utilisateur d’évaluer un autre utilisateur. En
-     * effet, les utilisateurs du site Amizone peuvent s’évaluer entre eux. Un
-     * fournisseur (respectivement consommateur) peut évaluer un consommateur
-     * (respectivement fournisseur) en lui attribuant une note d’appréciation
-     * (une évaluation) basée sur l’expérience d’une transaction conclue avec ce
-     * consommateur (respectivement fournisseur). Une évaluation valide est une
-     * note comprise entre 1 et 5 où 5 constitue la meilleure évaluation.
+ effet, les utilisateurs du site Amizone peuvent s’évaluer entre eux. Un
+ fournisseurs (respectivement consommateur) peut évaluer un consommateur
+ (respectivement fournisseurs) en lui attribuant une note d’appréciation
+ (une évaluation) basée sur l’expérience d’une transaction conclue avec ce
+ consommateur (respectivement fournisseurs). Une évaluation valide est une
+ note comprise entre 1 et 5 où 5 constitue la meilleure évaluation.
      *
      *
      * @param fournisseur l’utilisateur évalué (type Utilisateur)
@@ -100,8 +100,8 @@ public class Consommateur extends Utilisateur {
             throw new ClassCastException();
         } else if (evalScore < 0 || evalScore > 5) {
             throw new Exception(Utilisateur.MSG_ERR_EVAL_3);
-        } else if (!(TabUtils.elemEstDansTab(fournisseur.getId(), fournisseur()))) {
-            // recherche dans tab fournisseur de cette classe pour savoir si utilisateur en parametre est present
+        } else if (!(TabUtils.elemEstDansTab(fournisseur.getId(), fournisseurs()))) {
+            // recherche dans tab fournisseurs de cette classe pour savoir si utilisateur en parametre est present
             throw new Exception(Utilisateur.MSG_ERR_EVAL_2);
         } else {
             fournisseur.ajouterEvaluation(evalScore);
@@ -127,7 +127,7 @@ public class Consommateur extends Utilisateur {
      * 
      * @return 
      */
-    public Integer[] fournisseur() {
+    public Integer[] fournisseurs() {
         Integer[] tabFournisseursUtilise = null;
         int nbrFournisseurUtilise = 0;
         
