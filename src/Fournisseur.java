@@ -67,7 +67,7 @@ public class Fournisseur extends Utilisateur {
 
         if (produitsEnVente != null) {
             // resize
-            produitsEnVente = TabUtils.copieTab(produitsEnVente, (nbrProduitsEnVente - 1));
+            produitsEnVente = TabUtils.copieTab(produitsEnVente, nbrProduitsEnVente);
         }
         return produitsEnVente;
     }
@@ -80,9 +80,10 @@ public class Fournisseur extends Utilisateur {
             throw new ClassCastException();
         } else if (evalScore < 0 || evalScore > 5) {
             throw new Exception(Utilisateur.MSG_ERR_EVAL_3);
-        } else if (consommateur != null) {
-            // TODO ... trouvé comment savoir si consomateur a deja acheté un produit au consommateur.. 
-            // surement une methode a venir dans consommateur???
+        } else if (!(TabUtils.elemEstDansTab(this.getId(), ((Consommateur)consommateur).fournisseur()))) {
+            // si n'est pas dans tableau... j'ai fait un cast vue que consommateur en parametre est de type Utilisateur
+            // donc methode fournisseur() n'etait pas visible...
+            throw new Exception(Utilisateur.MSG_ERR_EVAL_1);
         } else {
             consommateur.ajouterEvaluation(evalScore);
         }
@@ -128,18 +129,33 @@ public class Fournisseur extends Utilisateur {
      * @throws java.lang.Exception
      */
     public void vendre(int codeProduit, int quantite) throws Exception {
-        if (quantite <= 0) {
-            throw new Exception(Utilisateur.MSG_ERR_VENTE_PROD);
-        } else {
-            for (int i = 0; i < produits.length; i++) {
-                if (produits[i].getCode() == codeProduit) {
-                    
+        Produit produitTrouve = null;
 
-                }
-
+        for (int i = 0; i < produits.length; i++) {
+            if (produits[i].getCode() == codeProduit) {
+                produitTrouve = produits[i];
             }
         }
 
+        if (produitTrouve == null) {
+            throw new Exception(Utilisateur.MSG_ERR_VENTE_PROD);
+        } else if (quantite <= 0 || quantite > produitTrouve.getQuantite()) {
+            throw new Exception(Utilisateur.MSG_ERR_VENTE_PROD);
+        } else {
+            produitTrouve.diminuerQte(quantite);
+        }
+    }
+
+    /**
+     * Retourne une representation sous forme de chaine de caracteres de ce
+     * Fournisseur.
+     *
+     * @return une representation sous forme de chaine de caracteres de ce
+     * Fournisseur.
+     */
+    @Override
+    public String toString() {
+        return super.toString() + " - " + nbrProduits;
     }
 
     /**

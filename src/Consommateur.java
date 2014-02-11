@@ -59,7 +59,8 @@ public class Consommateur extends Utilisateur {
             categoriesAchete = new String[Utilisateur.LONG_TAB];
 
             for (int i = 0, j = 0; i < achats.length; i++) {
-                if (achats[i] != null && stringEstDansTab(categoriesAchete, achats[i].getCategorie())) {
+                //if (achats[i] != null && stringEstDansTab(categoriesAchete, achats[i].getCategorie())) {
+                    if (achats[i] != null && TabUtils.elemEstDansTab(achats[i].getCategorie(), categoriesAchete)) {
                     categoriesAchete[j] = achats[i].getCategorie();
                     categoriesUniqueTrouve++;
                 }
@@ -99,9 +100,9 @@ public class Consommateur extends Utilisateur {
             throw new ClassCastException();
         } else if (evalScore < 0 || evalScore > 5) {
             throw new Exception(Utilisateur.MSG_ERR_EVAL_3);
-        } else if (fournisseur != null) {
-            // TODO ... trouvé comment savoir si consomateur a deja acheté un produit au fournisseur.. 
-            // surement une methode a venir dans fournisseur???
+        } else if (!(TabUtils.elemEstDansTab(fournisseur.getId(), fournisseur()))) {
+            // recherche dans tab fournisseur de cette classe pour savoir si utilisateur en parametre est present
+            throw new Exception(Utilisateur.MSG_ERR_EVAL_2);
         } else {
             fournisseur.ajouterEvaluation(evalScore);
         }
@@ -122,10 +123,32 @@ public class Consommateur extends Utilisateur {
         }
     }
 
-    public int[] fournisseur() {
-        int[] tabFournisseursUtilise = null;
-        // C'est beau de retourner la liste mais a quekl moment jy ajoute une fournisseur???
-
+    /**
+     * 
+     * @return 
+     */
+    public Integer[] fournisseur() {
+        Integer[] tabFournisseursUtilise = null;
+        int nbrFournisseurUtilise = 0;
+        
+        for (int i = 0; i < achats.length; i++) {
+            if (achats[i] instanceof Produit) {
+                // initialiste tab
+                if (nbrFournisseurUtilise == 0) {
+                    tabFournisseursUtilise = new Integer[Utilisateur.LONG_TAB];
+                }
+                // ajoute les elements si pas deja presents
+                if (!(TabUtils.elemEstDansTab(achats[i].getIdFournisseur(), tabFournisseursUtilise))) {
+                    tabFournisseursUtilise[nbrFournisseurUtilise] = achats[i].getIdFournisseur();
+                    nbrFournisseurUtilise = nbrFournisseurUtilise + 1;
+                }
+            }
+        }
+        
+        // ajuste longueur du tab
+        if (tabFournisseursUtilise != null) {
+            tabFournisseursUtilise = TabUtils.copieTab(tabFournisseursUtilise, nbrFournisseurUtilise);
+        }
         return tabFournisseursUtilise;
     }
 
@@ -160,6 +183,7 @@ public class Consommateur extends Utilisateur {
     /**
      * METHODES DE CLASSE PRIVE
      */
+    /*
     private boolean stringEstDansTab(String[] tab, String item) {
         boolean foundItem = false;
 
@@ -170,4 +194,18 @@ public class Consommateur extends Utilisateur {
         }
         return foundItem;
     }
+    */
+ 
+    /*
+        private boolean intEstDansTab(int[] tab, int item) {
+        boolean foundItem = false;
+
+        for (int i = 0; i < tab.length; i++) {
+            if (tab[i] == item) {
+                foundItem = true;
+            }
+        }
+        return foundItem;
+    }
+    */
 }
