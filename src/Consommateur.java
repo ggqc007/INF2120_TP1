@@ -90,7 +90,7 @@ public class Consommateur extends Utilisateur {
      * @throws java.lang.Exception
      */
     @Override
-    public void evaluer(Utilisateur fournisseur, int evalScore) throws ClassCastException, NullPointerException, Exception {
+    public void evaluer(Utilisateur fournisseur, int evalScore) throws Exception {
         if (fournisseur == null) {
             throw new NullPointerException();
         } else if (!(fournisseur instanceof Fournisseur)) {
@@ -175,32 +175,4 @@ public class Consommateur extends Utilisateur {
     public int getNbrAchats() {
         return nbrAchats;
     }
-
-    /**
-     * METHODES DE CLASSE PRIVE
-     */
-    /*
-     private boolean stringEstDansTab(String[] tab, String item) {
-     boolean foundItem = false;
-
-     for (int i = 0; i < tab.length; i++) {
-     if (tab[i].equalsIgnoreCase(item)) {
-     foundItem = true;
-     }
-     }
-     return foundItem;
-     }
-     */
-    /*
-     private boolean intEstDansTab(int[] tab, int item) {
-     boolean foundItem = false;
-
-     for (int i = 0; i < tab.length; i++) {
-     if (tab[i] == item) {
-     foundItem = true;
-     }
-     }
-     return foundItem;
-     }
-     */
 }
