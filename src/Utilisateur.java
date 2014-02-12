@@ -1,12 +1,19 @@
 
 /**
- * Cette classe modelise un utilisateur d'un site de commerce electronique
- * integrant un systeme de recommandations basees sur l'evaluation des pairs
- * ainsi que les preferences (le profil) des utilisateurs.
+ * INF2120 - Groupe 10 Professeur: Melanie Lord
  *
- * @author melanie lord
- * @version 21/01/2014
+ * @author Guillaume Gagnon
+ * @version 2014-02-12
+ *
+ * Description de la classe: Cette classe modelise un utilisateur d'un site de
+ * commerce electronique integrant un systeme de recommandations basees sur
+ * l'evaluation des pairs ainsi que les preferences (le profil) des
+ * utilisateurs.
+ *
+ * Informations sur l'etudiant: Gagnon Guillaume GAGG15048002
+ * gagnon.guillaume.5@courrier.uqam.ca
  */
+
 public abstract class Utilisateur {
 
     /**
@@ -42,12 +49,12 @@ public abstract class Utilisateur {
     /**
      * ATTRIBUTS D'INSTANCE
      */
-    private int id;
-    private String pseudo;
-    private String motPasse;
-    private String courriel;
-    private int[] evaluations;
-    private int nbrEval;
+    private int id; // numero d’identification unique pour cet utilisateur
+    private String pseudo; // le nom d'utilisateur (pseudonyme) de cet utilisateur
+    private String motPasse; // le mot de passe de cet utilisateur
+    private String courriel; // le courriel de cet utilisateur
+    private int[] evaluations; // le tableau des evaluations reçues
+    private int nbrEval; // le nombre d’evaluations dans le tableau evaluations 
 
     /**
      * CONSTRUCTEURS
@@ -102,62 +109,139 @@ public abstract class Utilisateur {
     public abstract String[] compilerProfil();
 
     /**
-     * Cette méthode permet à un utilisateur d’évaluer un autre utilisateur. En
-     * effet, les utilisateurs du site Amizone peuvent s’évaluer entre eux. Un
-     * fournisseur (respectivement consommateur) peut évaluer un consommateur
-     * (respectivement fournisseur) en lui attribuant une note d’appréciation
-     * (une évaluation) basée sur l’expérience d’une transaction conclue avec ce
-     * consommateur (respectivement fournisseur). Une évaluation valide est une
-     * note comprise entre 1 et 5 où 5 constitue la meilleure évaluation.
+     * Cette methode permet a un utilisateur d’evaluer un autre utilisateur. Une
+     * evaluation valide est une note comprise entre 1 et 5 où 5 constitue la
+     * meilleure evaluation.
      *
-     *
-     * @param user l’utilisateur évalué (type Utilisateur)
-     * @param evalScore l’évaluation donnée à l’utilisateur
+     * @param user l’utilisateur evalue (type Utilisateur)
+     * @param evalScore l’evaluation donnee à l’utilisateur (1 a 5)
      *
      * Cette méthode leve une Exception (type Exception) lorsque 1)
      * l’utilisateur évalué n’a jamais conclu de transaction avec l’utilisateur
      * qui l’évalue ou lorsque 2) l’évaluation donnée en paramètre n’est pas
      * valide
-     * 
-     * @throws java.lang.Exception
+     *
+     * @throws java.lang.Exception Evaluation donnee en parametre n’est pas
+     * valide ou l’utilisateur evalue n’a jamais conclu de transaction avec
+     * l’utilisateur qui l’evalue.
      */
     public abstract void evaluer(Utilisateur user, int evalScore) throws Exception;
 
     /**
+     * METHODES D'INSTANCE PUBLIQUES
+     */
+    /**
+     * Calcule et retourne la moyenne de toutes les evaluations de cet
+     * utilisateur (contenues dans le tableau evaluations).
+     *
+     * @return Moyenne des evaluations ou 0 si pas d'evaluations.
+     */
+    public double evaluationMoyenne() {
+        double totalScore = 0;
+
+        for (int i = 0; i < evaluations.length; i++) {
+            totalScore = totalScore + evaluations[i];
+        }
+        return (double) Math.round((totalScore / nbrEval) * 100) / 100;
+    }
+
+    /**
+     * Cette methode permet d’ajouter une nouvelle evaluation reçue au tableau
+     * des evaluations de cet utilisateur.
+     *
+     * @param evalScore Note d'evaluation
+     * @throws java.lang.Exception InvalideEvalException Si l’evaluation donnée
+     * en parametre n’est pas valide.
+     */
+    public void ajouterEvaluation(int evalScore) throws Exception {
+        if (evalScore < EVAL_MIN || evalScore > EVAL_MAX) {
+            throw new Exception(MSG_ERR_EVAL_3);
+        } else {
+            evaluations[nbrEval] = evalScore;
+            nbrEval++;
+        }
+    }
+
+    /**
      * GETTERS ET SETTERS
+     */
+    /**
+     * Retourne l'identificateur unique de l'utilisateur
+     *
+     * @return identificateur unique de l'utilisateur
      */
     public int getId() {
         return id;
     }
 
+    /**
+     * Retourne le nom de l'utilisateur (son pseudonyme)
+     *
+     * @return Nom d'utilisateur (pseudonyme)
+     */
     public String getPseudo() {
         return pseudo;
     }
 
+    /**
+     * Retourne le mot de passe de l'utilisateur
+     *
+     * @return Mot de passe
+     */
     public String getMotPasse() {
         return motPasse;
     }
 
+    /**
+     * Retourne le courriel de l'utilisateur
+     *
+     * @return courriel de l'utilisateur
+     */
     public String getCourriel() {
         return courriel;
     }
 
+    /**
+     * Retourne le tableau des evaluations recues
+     *
+     * @return tableau des evaluations recues
+     */
     public int[] getEvaluations() {
         return evaluations;
     }
 
+    /**
+     * Retourne le nombre d'evalusations dans le tableau d'evaluations
+     *
+     * @return nombre d'evalusations dans le tableau d'evaluations
+     */
     public int getNbrEval() {
         return nbrEval;
     }
 
+    /**
+     * Modifie le nom de l'utilisateur (son pseudonyme)
+     *
+     * @param pseudo le nouveau nom d'utilisateur (pseudonyme)
+     */
     public void setPseudo(String pseudo) {
         this.pseudo = pseudo;
     }
 
+    /**
+     * Modifie le mot de passe de l'utilisateur
+     *
+     * @param motPasse le nouveau mot de passe de l'utilisateur
+     */
     public void setMotPasse(String motPasse) {
         this.motPasse = motPasse;
     }
 
+    /**
+     * Modifie le courriel de l'utilisateur
+     *
+     * @param courriel nouveau courriel de l'utilisateur
+     */
     public void setCourriel(String courriel) {
         this.courriel = courriel;
     }
@@ -166,10 +250,11 @@ public abstract class Utilisateur {
      * REDEFINITION METHODES
      */
     /**
-     * Deux utilisateurs sont considérés comme étant égaux s’ils ont le même id
-     * 
-     * @param autreUtilisateur un utilisateur a comparer
-     * @return true si le id de l'utilisateur en parametre est identique a celui de l'instance
+     * Deux utilisateurs sont consideres comme etant egaux s’ils ont le meme id
+     *
+     * @param autreUtilisateur utilisateur a comparer
+     * @return true si id de l'utilisateur en parametre est identique a celui de
+     * l'instance
      */
     @Override
     public boolean equals(Object autreUtilisateur) {
@@ -177,18 +262,6 @@ public abstract class Utilisateur {
                 && getClass() == autreUtilisateur.getClass()
                 && this.getId() == ((Utilisateur) autreUtilisateur).getId();
     }
-    /*
-     @Override
-     public boolean equals(Object autreItem) {
-     return autreItem != null &&
-     //N.B. getClass() retourne le type dynamique ici
-     this.getClass() == autreItem.getClass() &&
-     //this.getClass().equals(autreItem.getClass()) &&
-     // AUSSI, ne pas oublier de cast l'objet pour le rendre compatible avec Item dans 
-     // le cas ou ItemInventaire serait l'objet passe en parametre par la classe enfant...
-     this.prix == ((Item)autreItem).prix
-     }
-     */
 
     /**
      * Retourne une representation de cet utilisateur sous forme d'une chaine de
@@ -202,43 +275,6 @@ public abstract class Utilisateur {
     public String toString() {
         return id + " : " + pseudo + " - " + motPasse + " - " + courriel
                 + " - " + nbrEval;
-    }
-
-    /**
-     * METHODES D'INSTANCE PUBLIQUES
-     */
-    /**
-     * Cette méthode calcule et retourne la moyenne de toutes les évaluations de
-     * cet utilisateur (contenues dans le tableau evaluations).
-     *
-     * @return Moyenne des évaluations ou 0 si pas d'évaluations.
-     */
-    public double evaluationMoyenne() {
-        double totalScore = 0;
-
-        for (int i = 0; i < evaluations.length; i++) {
-            totalScore = totalScore + evaluations[i];
-        }
-        return (double) Math.round((totalScore / nbrEval) * 100) / 100;
-    }
-
-    /**
-     * Cette méthode permet d’ajouter une nouvelle évaluation reçue au tableau
-     * des évaluations de cet utilisateur.
-     *
-     * @param evalScore Note d'évaluation
-     * @throws java.lang.Exception InvalideEvalException Cette méthode leve une
-     * Exception (type Exception) contenant le message
-     * Utilisateur.MSG_ERR_EVAL_3 lorsque l’évaluation donnée en paramètre n’est
-     * pas valide.
-     */
-    public void ajouterEvaluation(int evalScore) throws Exception {
-        if (evalScore < EVAL_MIN || evalScore > EVAL_MAX) {
-            throw new Exception(MSG_ERR_EVAL_3);
-        } else {
-            evaluations[nbrEval] = evalScore;
-            nbrEval++;
-        }
     }
 
 }
