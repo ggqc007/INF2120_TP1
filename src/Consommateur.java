@@ -2,27 +2,33 @@
 public class Consommateur extends Utilisateur {
 
     /**
+     * CONSTANTES
+     */
+    private static final int EVAL_MIN = 1;
+    private static final int EVAL_MAX = 5;
+
+    /**
      * ATTRIBUTS D'INSTANCE
      */
-    private Produit[] achats;
-    private int nbrAchats;
+    private Produit[] achats; // Tableau des produits achetes par ce consommateur
+    private int nbrAchats; // Nombre de produits achetes (presents dans tableau achats)
 
     /**
      * CONSTRUCTEURS
      */
     /**
      * Construit un Consommateur avec le pseudo, le motPasse et le courriel
-     * passes en paramètres. L'attribut id (numero unique) est assigne
+     * passes en parametres. L'attribut id (numero unique) est assigne
      * automatiquement. La longueur du tableau des achats de ce consommateur est
      * initialisee a Utilisateur.LONG_TAB et nbrAchats est a 0. La longueur du
      * tableau evaluations est initialisee a Utilisateur.LONG_TAB et nbrEval est
      * a 0.
      *
-     * @param pseudo le nom d'utilisateur (pseudonyme) de ce consommateur
-     * @param motPasse le mot de passe de ce consommateur
-     * @param courriel le courriel de ce consommateur
+     * @param pseudo Le nom d'utilisateur (pseudonyme) de ce consommateur
+     * @param motPasse Le mot de passe de ce consommateur
+     * @param courriel Le courriel de ce consommateur
      *
-     * ANTECEDENTS : le pseudo, le motPasse et le courriel doivent être valides
+     * ANTECEDENTS : le pseudo, le motPasse et le courriel doivent etre valides
      * (non null, non vides, correctement formes, etc.). On suppose aussi que
      * ces valeurs sont uniques pour chaque utilisateur cree.
      */
@@ -35,20 +41,22 @@ public class Consommateur extends Utilisateur {
     /**
      * Constructeur de copie. Pour tests seulement.
      *
-     * @param consommateur le consommateur dont on veut une copie.
+     * @param consommateur Le consommateur dont on veut une copie.
      */
     public Consommateur(Consommateur consommateur) {
         super(consommateur);
     }
 
     /**
-     * METHODES
+     * REDEFINITION METHODES
      */
     /**
-     * Cette méthode retourne un tableau de type String représentant le profil
-     * de l’utilisateur et ne prend aucun paramètre.
+     * Cette methode retourne un tableau de type String representant le profil
+     * de l’utilisateur. (Les categories de produits qu’il a achetes par le
+     * passe.)
      *
-     * @return tableau de type String représentant le profil de l’utilisateur
+     * @return Tableau de type String ou null si aucun produit n'a encore ete
+     * achete.
      */
     @Override
     public String[] compilerProfil() {
@@ -56,7 +64,8 @@ public class Consommateur extends Utilisateur {
         int categoriesUniqueTrouve = 0;
 
         for (int i = 0; i < achats.length; i++) {
-            if (achats[i] instanceof Produit && !TabUtils.elemEstDansTab(achats[i].getCategorie(), categoriesAchete)) {
+            if (achats[i] instanceof Produit
+                    && !TabUtils.elemEstDansTab(achats[i].getCategorie(), categoriesAchete)) {
                 categoriesAchete[categoriesUniqueTrouve] = achats[i].getCategorie();
                 categoriesUniqueTrouve = categoriesUniqueTrouve + 1;
             }
@@ -71,23 +80,18 @@ public class Consommateur extends Utilisateur {
     }
 
     /**
-     * Cette méthode permet à un utilisateur d’évaluer un autre utilisateur. En
-     * effet, les utilisateurs du site Amizone peuvent s’évaluer entre eux. Un
-     * fournisseurs (respectivement consommateur) peut évaluer un consommateur
-     * (respectivement fournisseurs) en lui attribuant une note d’appréciation
-     * (une évaluation) basée sur l’expérience d’une transaction conclue avec ce
-     * consommateur (respectivement fournisseurs). Une évaluation valide est une
-     * note comprise entre 1 et 5 où 5 constitue la meilleure évaluation.
+     * Permet a ce consommateur d’evaluer un fournisseur (recu en parametre).
      *
+     * @param fournisseur Le fournisseur evalue (type Utilisateur)
+     * @param evalScore L'evaluation donnee au fournisseur
      *
-     * @param fournisseur l’utilisateur évalué (type Utilisateur)
-     * @param evalScore l’évaluation donnée à l’utilisateur
-     *
-     * Cette méthode leve une Exception (type Exception) lorsque 1)
-     * l’utilisateur évalué n’a jamais conclu de transaction avec l’utilisateur
-     * qui l’évalue ou lorsque 2) l’évaluation donnée en paramètre n’est pas
-     * valide
-     * @throws java.lang.Exception
+     * @throws java.lang.ClassCastException Si l’utilisateur passe en parametre
+     * n’est pas de type Fournisseur.
+     * @throws java.lang.NullPointerException Si l’utilisateur passe en
+     * parametre est null.
+     * @throws java.lang.Exception Si le fournisseur passe en parametre n’a
+     * jamais vendu de produit(s) a ce consommateur OU si l’evaluation passee en
+     * parametre est invalide.
      */
     @Override
     public void evaluer(Utilisateur fournisseur, int evalScore) throws Exception {
@@ -95,65 +99,22 @@ public class Consommateur extends Utilisateur {
             throw new NullPointerException();
         } else if (!(fournisseur instanceof Fournisseur)) {
             throw new ClassCastException();
-        } else if (evalScore < 0 || evalScore > 5) {
+        } else if (evalScore < EVAL_MIN || evalScore > EVAL_MAX) {
             throw new Exception(Utilisateur.MSG_ERR_EVAL_3);
         } else if (!(TabUtils.elemEstDansTab(fournisseur.getId(), fournisseurs()))) {
-            // recherche dans tab fournisseurs de cette classe pour savoir si utilisateur en parametre est present
+            // Recherche dans tab fournisseurs de cette classe pour savoir si 
+            // utilisateur en parametre est present
             throw new Exception(Utilisateur.MSG_ERR_EVAL_2);
         } else {
             fournisseur.ajouterEvaluation(evalScore);
         }
     }
 
-    public void acheter(Produit produit, int quantite) throws Exception {
-        if (produit == null) {
-            throw new ExceptionProduitInvalide();
-        } else if (produit.getIdFournisseur() == 0) {
-            throw new Exception(Utilisateur.MSG_ERR_ACHAT);
-        } else if (quantite <= 0 || quantite > produit.getQuantite()) {
-            throw new Exception(Utilisateur.MSG_ERR_QTE);
-        } else {
-            // on ajoute une copie du produit!
-            achats[nbrAchats] = new Produit(produit);
-            achats[nbrAchats].setQuantite(quantite);
-            nbrAchats = nbrAchats + 1;
-        }
-    }
-
-    /**
-     *
-     * @return
-     */
-    public Integer[] fournisseurs() {
-        Integer[] tabFournisseursUtilise = null;
-        int nbrFournisseurUtilise = 0;
-
-        for (int i = 0; i < achats.length; i++) {
-            if (achats[i] instanceof Produit) {
-                // initialiste tab
-                if (nbrFournisseurUtilise == 0) {
-                    tabFournisseursUtilise = new Integer[Utilisateur.LONG_TAB];
-                }
-                // ajoute les elements si pas deja presents
-                if (!(TabUtils.elemEstDansTab(achats[i].getIdFournisseur(), tabFournisseursUtilise))) {
-                    tabFournisseursUtilise[nbrFournisseurUtilise] = achats[i].getIdFournisseur();
-                    nbrFournisseurUtilise = nbrFournisseurUtilise + 1;
-                }
-            }
-        }
-
-        // ajuste longueur du tab
-        if (tabFournisseursUtilise != null) {
-            tabFournisseursUtilise = TabUtils.copieTab(tabFournisseursUtilise, nbrFournisseurUtilise);
-        }
-        return tabFournisseursUtilise;
-    }
-
     /**
      * Retourne une representation sous forme de chaine de caracteres de ce
      * consommateur.
      *
-     * @return une representation sous forme de chaine de caracteres de ce
+     * @return Une representation sous forme de chaine de caracteres de ce
      * consommateur.
      */
     @Override
@@ -162,16 +123,80 @@ public class Consommateur extends Utilisateur {
     }
 
     /**
+     * METHODES D'INSTANCE PUBLIQUES
+     */
+    /**
+     * Cette methode consiste a ajouter un produit au tableau des achats.
+     *
+     * @param produit Le produit a ajouter (Type Produit)
+     * @param quantite La quantite achetee
+     * @throws ExceptionProduitInvalide Si le produit donne est null
+     * @throws Exception Si le produit n’est vendu par aucun fournisseur OU si
+     * la quantite achetee est plus petite ou egale a 0 ou si elle est plus
+     * grande que la quantite en stock du produit.
+     */
+    public void acheter(Produit produit, int quantite) throws Exception {
+        if (produit == null) {
+            throw new ExceptionProduitInvalide();
+        } else if (produit.getIdFournisseur() == 0) {
+            throw new Exception(Utilisateur.MSG_ERR_ACHAT);
+        } else if (quantite <= 0 || quantite > produit.getQuantite()) {
+            throw new Exception(Utilisateur.MSG_ERR_QTE);
+        } else {
+            // On ajoute une copie du produit!
+            achats[nbrAchats] = new Produit(produit);
+            achats[nbrAchats].setQuantite(quantite);
+            nbrAchats = nbrAchats + 1;
+        }
+    }
+
+    /**
+     * Retourne un tableau d’entiers (type Integer []) de tous les numeros
+     * d’identification des fournisseurs de qui ce consommateur a achete un ou
+     * des produits.
+     *
+     * @return Retourne un tableau d’entiers (type Integer []) ou null si le
+     * consommateur n’a encore fait aucun achat.
+     */
+    public Integer[] fournisseurs() {
+        Integer[] tabFournisseursUtilise = new Integer[Utilisateur.LONG_TAB];
+        int nbrFournisseurUtilise = 0;
+
+        for (int i = 0; i < achats.length; i++) {
+            // Ajoute les id fournisseurs des produits si pas deja presents
+            if (achats[i] instanceof Produit
+                    && !(TabUtils.elemEstDansTab(achats[i].getIdFournisseur(), tabFournisseursUtilise))) {
+                tabFournisseursUtilise[nbrFournisseurUtilise] = achats[i].getIdFournisseur();
+                nbrFournisseurUtilise = nbrFournisseurUtilise + 1;
+            }
+        }
+        // Ajuste longueur du tab ou mise a null avant retour
+        if (nbrFournisseurUtilise > 0) {
+            tabFournisseursUtilise = TabUtils.copieTab(tabFournisseursUtilise, nbrFournisseurUtilise);
+        } else {
+            tabFournisseursUtilise = null;
+        }
+        return tabFournisseursUtilise;
+    }
+
+    /**
      * Getter & Setters
      *
      */
     /**
-     * @return
+     * Retourne le tableau des produits achetes par ce consommateur
+     *
+     * @return Tableau des produits achetes par ce consommateur
      */
     public Produit[] getAchats() {
         return achats;
     }
 
+    /**
+     * Retourne le nombre de produits achetes (presents dans tableau achats)
+     *
+     * @return Le nombre de produits achetes
+     */
     public int getNbrAchats() {
         return nbrAchats;
     }

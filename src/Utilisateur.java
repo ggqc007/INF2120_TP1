@@ -38,23 +38,23 @@ public abstract class Utilisateur {
     private static final int EVAL_MIN = 1;
     private static final int EVAL_MAX = 5;
     //longueur des tableaux
-    public static final int LONG_TAB = 100; //longueur des tableaux
+    public static final int LONG_TAB = 100; // Longueur des tableaux
 
     /**
      * VARIABLE DE CLASSE
      */
-    //sequence pour assigner un numero unique (id) a un utilisateur
+    // Sequence pour assigner un numero unique (id) a un utilisateur
     private static int seqId = 1;
 
     /**
      * ATTRIBUTS D'INSTANCE
      */
-    private int id; // numero d’identification unique pour cet utilisateur
-    private String pseudo; // le nom d'utilisateur (pseudonyme) de cet utilisateur
-    private String motPasse; // le mot de passe de cet utilisateur
-    private String courriel; // le courriel de cet utilisateur
-    private int[] evaluations; // le tableau des evaluations reçues
-    private int nbrEval; // le nombre d’evaluations dans le tableau evaluations 
+    private int id; // Numero d’identification unique pour cet utilisateur
+    private String pseudo; // Le nom d'utilisateur (pseudonyme) de cet utilisateur
+    private String motPasse; // Le mot de passe de cet utilisateur
+    private String courriel; // Le courriel de cet utilisateur
+    private int[] evaluations; // Le tableau des evaluations reçues
+    private int nbrEval; // Le nombre d’evaluations dans le tableau evaluations 
 
     /**
      * CONSTRUCTEURS
@@ -65,9 +65,9 @@ public abstract class Utilisateur {
      * automatiquement. La longueur du tableau evaluations est initialisee a
      * LONG_TAB et nbrEval est a 0.
      *
-     * @param pseudo le nom d'utilisateur (pseudonyme) de cet utilisateur.
-     * @param motPasse le mot de passe de cet utilisateur
-     * @param courriel le courriel de cet utilisateur
+     * @param pseudo Le nom d'utilisateur (pseudonyme) de cet utilisateur.
+     * @param motPasse Le mot de passe de cet utilisateur
+     * @param courriel Le courriel de cet utilisateur
      *
      * ANTECEDENTS : le pseudo, le motPasse et le courriel doivent etre valides
      * (non null, non vides, correctement formes, etc.). On suppose aussi que
@@ -86,7 +86,7 @@ public abstract class Utilisateur {
     /**
      * Constructeur de copie. POUR TESTS SEULEMENT.
      *
-     * @param utilisateur l'utilisateur dont on veut une copie.
+     * @param utilisateur L'utilisateur dont on veut une copie.
      */
     public Utilisateur(Utilisateur utilisateur) {
         this.pseudo = utilisateur.pseudo;
@@ -104,7 +104,7 @@ public abstract class Utilisateur {
      * Cette méthode retourne un tableau de type String représentant le profil
      * de l’utilisateur et ne prend aucun paramètre.
      *
-     * @return tableau de type String représentant le profil de l’utilisateur
+     * @return Tableau de type String représentant le profil de l’utilisateur
      */
     public abstract String[] compilerProfil();
 
@@ -113,15 +113,15 @@ public abstract class Utilisateur {
      * evaluation valide est une note comprise entre 1 et 5 où 5 constitue la
      * meilleure evaluation.
      *
-     * @param user l’utilisateur evalue (type Utilisateur)
-     * @param evalScore l’evaluation donnee à l’utilisateur (1 a 5)
+     * @param user L’utilisateur evalue (type Utilisateur)
+     * @param evalScore L’evaluation donnee à l’utilisateur (1 a 5)
      *
      * Cette méthode leve une Exception (type Exception) lorsque 1)
      * l’utilisateur évalué n’a jamais conclu de transaction avec l’utilisateur
      * qui l’évalue ou lorsque 2) l’évaluation donnée en paramètre n’est pas
      * valide
      *
-     * @throws java.lang.Exception Evaluation donnee en parametre n’est pas
+     * @throws java.lang.Exception Si evaluation donnee en parametre n’est pas
      * valide ou l’utilisateur evalue n’a jamais conclu de transaction avec
      * l’utilisateur qui l’evalue.
      */
@@ -134,7 +134,7 @@ public abstract class Utilisateur {
      * Calcule et retourne la moyenne de toutes les evaluations de cet
      * utilisateur (contenues dans le tableau evaluations).
      *
-     * @return Moyenne des evaluations ou 0 si pas d'evaluations.
+     * @return Moyenne des evaluations (ou 0 si pas d'evaluations).
      */
     public double evaluationMoyenne() {
         double totalScore = 0;
@@ -168,7 +168,7 @@ public abstract class Utilisateur {
     /**
      * Retourne l'identificateur unique de l'utilisateur
      *
-     * @return identificateur unique de l'utilisateur
+     * @return Identificateur unique de l'utilisateur
      */
     public int getId() {
         return id;
@@ -195,7 +195,7 @@ public abstract class Utilisateur {
     /**
      * Retourne le courriel de l'utilisateur
      *
-     * @return courriel de l'utilisateur
+     * @return Courriel de l'utilisateur
      */
     public String getCourriel() {
         return courriel;
@@ -204,7 +204,7 @@ public abstract class Utilisateur {
     /**
      * Retourne le tableau des evaluations recues
      *
-     * @return tableau des evaluations recues
+     * @return Tableau des evaluations recues
      */
     public int[] getEvaluations() {
         return evaluations;
@@ -213,7 +213,7 @@ public abstract class Utilisateur {
     /**
      * Retourne le nombre d'evalusations dans le tableau d'evaluations
      *
-     * @return nombre d'evalusations dans le tableau d'evaluations
+     * @return Nombre d'evalusations dans le tableau d'evaluations
      */
     public int getNbrEval() {
         return nbrEval;
@@ -222,7 +222,7 @@ public abstract class Utilisateur {
     /**
      * Modifie le nom de l'utilisateur (son pseudonyme)
      *
-     * @param pseudo le nouveau nom d'utilisateur (pseudonyme)
+     * @param pseudo Le nouveau nom d'utilisateur (pseudonyme)
      */
     public void setPseudo(String pseudo) {
         this.pseudo = pseudo;
@@ -231,7 +231,7 @@ public abstract class Utilisateur {
     /**
      * Modifie le mot de passe de l'utilisateur
      *
-     * @param motPasse le nouveau mot de passe de l'utilisateur
+     * @param motPasse Le nouveau mot de passe de l'utilisateur
      */
     public void setMotPasse(String motPasse) {
         this.motPasse = motPasse;
@@ -240,7 +240,7 @@ public abstract class Utilisateur {
     /**
      * Modifie le courriel de l'utilisateur
      *
-     * @param courriel nouveau courriel de l'utilisateur
+     * @param courriel Nouveau courriel de l'utilisateur
      */
     public void setCourriel(String courriel) {
         this.courriel = courriel;
