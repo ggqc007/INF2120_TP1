@@ -11,8 +11,13 @@
  * Informations sur l'etudiant: Gagnon Guillaume GAGG15048002
  * gagnon.guillaume.5@courrier.uqam.ca
  */
-
 public class Fournisseur extends Utilisateur {
+
+    /**
+     * CONSTANTES
+     */
+    private static final int EVAL_MIN = 1; // Note d'evaluation minimum
+    private static final int EVAL_MAX = 5; // Note d'evaluation maximum
 
     /**
      * ATTRIBUTS D'INSTANCE
@@ -91,17 +96,34 @@ public class Fournisseur extends Utilisateur {
         return produitsEnVente;
     }
 
+    /**
+     * Cette methode permet à ce fournisseur d’evaluer un consommateur (recu en
+     * parametre).
+     *
+     * @param consommateur Consommateur a evaluer.
+     * @param evalScore Note de l'evaluation.
+     *
+     * @throws ClassCastException Si l’utilisateur passe en parametre n’est pas
+     * de type Consommateur.
+     * @throws NullPointerException Si l’utilisateur passe en parametre est
+     * null.
+     * @throws Exception Si le consommateur passe en parametre n’a jamais achete
+     * de produit(s) de ce fournisseur OU si l’evaluation passee en parametre
+     * est invalide.
+     */
     @Override
-    public void evaluer(Utilisateur consommateur, int evalScore) throws ClassCastException, NullPointerException, Exception {
+    public void evaluer(Utilisateur consommateur, int evalScore)
+            throws ClassCastException, NullPointerException, Exception {
         if (consommateur == null) {
             throw new NullPointerException();
         } else if (!(consommateur instanceof Consommateur)) {
             throw new ClassCastException();
-        } else if (evalScore < 0 || evalScore > 5) {
+        } else if (evalScore < EVAL_MIN || evalScore > EVAL_MAX) {
             throw new Exception(Utilisateur.MSG_ERR_EVAL_3);
-        } else if (!(TabUtils.elemEstDansTab(this.getId(), ((Consommateur) consommateur).fournisseurs()))) {
-            // si n'est pas dans tableau... j'ai fait un cast vue que consommateur en parametre est de type Utilisateur
-            // donc methode fournisseurs() n'etait pas visible...
+        } else if (!(TabUtils.elemEstDansTab(this.getId(),
+                ((Consommateur) consommateur).fournisseurs()))) {
+            // Si n'est pas dans tableau... j'ai fait un cast car consommateur en parametre
+            // est de type Utilisateur donc methode fournisseurs() n'etait pas visible...
             throw new Exception(Utilisateur.MSG_ERR_EVAL_1);
         } else {
             consommateur.ajouterEvaluation(evalScore);
@@ -123,7 +145,24 @@ public class Fournisseur extends Utilisateur {
     /**
      * METHODES D'INSTANCE PUBLIQUES
      */
-    public void ajouterNouveauProduit(Produit produit, int quantite, double prix) throws Exception {
+    /**
+     * Permet d’ajouter un nouveau produit à vendre dans le tableau des produits
+     * de ce fournisseur, si celui-ci n’y est pas deja.
+     *
+     * @param produit Le nouveau produit à ajouter au tableau des produits.
+     * @param quantite La quantite en stock initiale de ce nouveau produit a
+     * vendre.
+     * @param prix Le prix de vente de ce nouveau produit à vendre.
+     *
+     * @throws ExceptionProduitInvalide Si le produit donne en parametre est
+     * null.
+     * @throws Exception Si la quantite en stock donnee est plus petite ou egale
+     * a 0 OU si le prix de vente donne est plus petit ou egal à 0 OU si le
+     * produit donne en parametre existe deja dans le tableau des produits de ce
+     * fournisseur.
+     */
+    public void ajouterNouveauProduit(Produit produit, int quantite, double prix)
+            throws Exception {
         if (produit == null) {
             throw new ExceptionProduitInvalide();
         } else if (quantite <= 0) {
@@ -143,17 +182,21 @@ public class Fournisseur extends Utilisateur {
     }
 
     /**
+     * Cette methode recherche, dans le tableau des produits de ce fournisseur,
+     * le produit ayant le code donne.
      *
+     * @param codeProduit Le code du produit recherche.
+     * @return Le produit (type Produit) s’il a ete trouve, sinon elle retourne
+     * la valeur null.
      */
     public Produit obtenirProduit(int codeProduit) {
         Produit produitTrouve = null;
 
         if (produits != null) {
             for (int i = 0; i < produits.length && produitTrouve == null; i++) {
-                if (produits[i] instanceof Produit) {
-                    if (produits[i].getCode() == codeProduit) {
-                        produitTrouve = produits[i];
-                    }
+                if (produits[i] instanceof Produit
+                        && produits[i].getCode() == codeProduit) {
+                    produitTrouve = produits[i];
                 }
             }
         }
