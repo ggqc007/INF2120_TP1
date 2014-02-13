@@ -1,11 +1,24 @@
+/**
+ * INF2120 - Groupe 10 Professeur: Melanie Lord
+ *
+ * @author Guillaume Gagnon
+ * @version 2014-02-12
+ *
+ * Description de la classe: La classe Fournisseur est une classe concrete qui
+ * herite de la classe Utilisateur.
+ *
+ * Informations sur l'etudiant: Gagnon Guillaume GAGG15048002
+ * gagnon.guillaume.5@courrier.uqam.ca
+ */
 
 public class Fournisseur extends Utilisateur {
 
     /**
      * ATTRIBUTS D'INSTANCE
      */
-    private Produit[] produits;
-    private int nbrProduits;
+    private Produit[] produits; // Tableau des produits vendus par ce fournisseur
+    private int nbrProduits; // Le nombre de produits vendus (presents dans le 
+                             // tableau des produits)
 
     /**
      * CONSTRUCTEURS
@@ -18,9 +31,9 @@ public class Fournisseur extends Utilisateur {
      * 0. La longueur du tableau evaluations est initialisee a
      * Utilisateur.LONG_TAB et nbrEval est a 0.
      *
-     * @param pseudo le nom d'utilisateur (pseudonyme) de ce fournisseurs.
-     * @param motPasse le mot de passe de ce fournisseurs
-     * @param courriel le courriel de ce fournisseurs
+     * @param pseudo Le nom d'utilisateur (pseudonyme) de ce fournisseurs.
+     * @param motPasse Le mot de passe de ce fournisseurs.
+     * @param courriel Le courriel de ce fournisseurs.
      *
      * ANTECEDENTS : le pseudo, le motPasse et le courriel sont des valeurs
      * valides non vides et non egales a null. On suppose aussi que ces valeurs
@@ -35,24 +48,29 @@ public class Fournisseur extends Utilisateur {
     /**
      * Constructeur de copie. Pour tests seulement.
      *
-     * @param fournisseur le fournisseurs dont on veut une copie.
+     * @param fournisseur Le fournisseurs dont on veut une copie.
      */
     public Fournisseur(Fournisseur fournisseur) {
         super(fournisseur);
     }
 
     /**
-     * METHODES
+     * REDEFINITION METHODES
      */
     /**
-     * METHODES
-     */
-    /**
-     * @return produitsEnVente
+     * Retourne un tableau contenant toutes les categories differentes recensees
+     * sur les produits vendus par ce fournisseur (produits dans le tableau des
+     * produits). Seuls les produits dont la quantite en stock (voir attribut 
+     * quantite de la classe Produit) est strictement plus grande que 0 sont 
+     * consideres pour recenser les categories.
+     * 
+     * @return produitsEnVente Tableau contenant toutes les categories differentes
+     * recensees sur les produits vendus par ce fournisseur.
      */
     @Override
     public String[] compilerProfil() {
-        String[] produitsEnVente = null; // ne pas oublier de resize le tableau avant retour
+        //String[] produitsEnVente = null;
+        String[] produitsEnVente = null;
         int nbrProduitsEnVente = 0;
 
         for (int i = 0; i < produits.length && produits != null; i++) {
@@ -90,7 +108,22 @@ public class Fournisseur extends Utilisateur {
             consommateur.ajouterEvaluation(evalScore);
         }
     }
-
+    
+        /**
+     * Retourne une representation sous forme de chaine de caracteres de ce
+     * Fournisseur.
+     *
+     * @return une representation sous forme de chaine de caracteres de ce
+     * Fournisseur.
+     */
+    @Override
+    public String toString() {
+        return super.toString() + " - " + nbrProduits;
+    }
+    
+    /**
+     * METHODES D'INSTANCE PUBLIQUES
+     */
     public void ajouterNouveauProduit(Produit produit, int quantite, double prix) throws Exception {
         if (produit == null) {
             throw new ExceptionProduitInvalide();
@@ -152,18 +185,6 @@ public class Fournisseur extends Utilisateur {
         } else {
             produitTrouve.diminuerQte(quantite);
         }
-    }
-
-    /**
-     * Retourne une representation sous forme de chaine de caracteres de ce
-     * Fournisseur.
-     *
-     * @return une representation sous forme de chaine de caracteres de ce
-     * Fournisseur.
-     */
-    @Override
-    public String toString() {
-        return super.toString() + " - " + nbrProduits;
     }
 
     /**

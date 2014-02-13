@@ -66,8 +66,8 @@ public abstract class Utilisateur {
      * LONG_TAB et nbrEval est a 0.
      *
      * @param pseudo Le nom d'utilisateur (pseudonyme) de cet utilisateur.
-     * @param motPasse Le mot de passe de cet utilisateur
-     * @param courriel Le courriel de cet utilisateur
+     * @param motPasse Le mot de passe de cet utilisateur.
+     * @param courriel Le courriel de cet utilisateur.
      *
      * ANTECEDENTS : le pseudo, le motPasse et le courriel doivent etre valides
      * (non null, non vides, correctement formes, etc.). On suppose aussi que
@@ -104,7 +104,7 @@ public abstract class Utilisateur {
      * Cette méthode retourne un tableau de type String représentant le profil
      * de l’utilisateur et ne prend aucun paramètre.
      *
-     * @return Tableau de type String représentant le profil de l’utilisateur
+     * @return Tableau de type String représentant le profil de l’utilisateur.
      */
     public abstract String[] compilerProfil();
 
@@ -113,13 +113,13 @@ public abstract class Utilisateur {
      * evaluation valide est une note comprise entre 1 et 5 où 5 constitue la
      * meilleure evaluation.
      *
-     * @param user L’utilisateur evalue (type Utilisateur)
-     * @param evalScore L’evaluation donnee à l’utilisateur (1 a 5)
+     * @param user L’utilisateur evalue (type Utilisateur).
+     * @param evalScore L’evaluation donnee à l’utilisateur (1 a 5).
      *
      * Cette méthode leve une Exception (type Exception) lorsque 1)
      * l’utilisateur évalué n’a jamais conclu de transaction avec l’utilisateur
      * qui l’évalue ou lorsque 2) l’évaluation donnée en paramètre n’est pas
-     * valide
+     * valide.
      *
      * @throws java.lang.Exception Si evaluation donnee en parametre n’est pas
      * valide ou l’utilisateur evalue n’a jamais conclu de transaction avec
@@ -166,81 +166,81 @@ public abstract class Utilisateur {
      * GETTERS ET SETTERS
      */
     /**
-     * Retourne l'identificateur unique de l'utilisateur
+     * Retourne l'identificateur unique de l'utilisateur.
      *
-     * @return Identificateur unique de l'utilisateur
+     * @return Identificateur unique de l'utilisateur.
      */
     public int getId() {
         return id;
     }
 
     /**
-     * Retourne le nom de l'utilisateur (son pseudonyme)
+     * Retourne le nom de l'utilisateur (son pseudonyme).
      *
-     * @return Nom d'utilisateur (pseudonyme)
+     * @return Nom d'utilisateur (pseudonyme).
      */
     public String getPseudo() {
         return pseudo;
     }
 
     /**
-     * Retourne le mot de passe de l'utilisateur
+     * Retourne le mot de passe de l'utilisateur.
      *
-     * @return Mot de passe
+     * @return Mot de passe.
      */
     public String getMotPasse() {
         return motPasse;
     }
 
     /**
-     * Retourne le courriel de l'utilisateur
+     * Retourne le courriel de l'utilisateur.
      *
-     * @return Courriel de l'utilisateur
+     * @return Courriel de l'utilisateur.
      */
     public String getCourriel() {
         return courriel;
     }
 
     /**
-     * Retourne le tableau des evaluations recues
+     * Retourne le tableau des evaluations recues.
      *
-     * @return Tableau des evaluations recues
+     * @return Tableau des evaluations recues.
      */
     public int[] getEvaluations() {
         return evaluations;
     }
 
     /**
-     * Retourne le nombre d'evalusations dans le tableau d'evaluations
+     * Retourne le nombre d'evalusations dans le tableau d'evaluations.
      *
-     * @return Nombre d'evalusations dans le tableau d'evaluations
+     * @return Nombre d'evalusations dans le tableau d'evaluations.
      */
     public int getNbrEval() {
         return nbrEval;
     }
 
     /**
-     * Modifie le nom de l'utilisateur (son pseudonyme)
+     * Modifie le nom de l'utilisateur (son pseudonyme).
      *
-     * @param pseudo Le nouveau nom d'utilisateur (pseudonyme)
+     * @param pseudo Le nouveau nom d'utilisateur (pseudonyme).
      */
     public void setPseudo(String pseudo) {
         this.pseudo = pseudo;
     }
 
     /**
-     * Modifie le mot de passe de l'utilisateur
+     * Modifie le mot de passe de l'utilisateur.
      *
-     * @param motPasse Le nouveau mot de passe de l'utilisateur
+     * @param motPasse Le nouveau mot de passe de l'utilisateur.
      */
     public void setMotPasse(String motPasse) {
         this.motPasse = motPasse;
     }
 
     /**
-     * Modifie le courriel de l'utilisateur
+     * Modifie le courriel de l'utilisateur.
      *
-     * @param courriel Nouveau courriel de l'utilisateur
+     * @param courriel Nouveau courriel de l'utilisateur.
      */
     public void setCourriel(String courriel) {
         this.courriel = courriel;
@@ -250,11 +250,11 @@ public abstract class Utilisateur {
      * REDEFINITION METHODES
      */
     /**
-     * Deux utilisateurs sont consideres comme etant egaux s’ils ont le meme id
+     * Deux utilisateurs sont consideres comme etant egaux s’ils ont le meme id.
      *
-     * @param autreUtilisateur utilisateur a comparer
+     * @param autreUtilisateur utilisateur a comparer.
      * @return true si id de l'utilisateur en parametre est identique a celui de
-     * l'instance
+     * l'instance.
      */
     @Override
     public boolean equals(Object autreUtilisateur) {

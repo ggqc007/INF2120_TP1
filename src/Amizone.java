@@ -1,3 +1,14 @@
+/**
+ * INF2120 - Groupe 10 Professeur: Melanie Lord
+ *
+ * @author Guillaume Gagnon
+ * @version 2014-02-12
+ *
+ * Description de la classe: !!!!!!!!!!!!!
+ *
+ * Informations sur l'etudiant: Gagnon Guillaume GAGG15048002
+ * gagnon.guillaume.5@courrier.uqam.ca
+ */
 
 import java.util.ArrayList;
 

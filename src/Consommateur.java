@@ -1,11 +1,23 @@
+/**
+ * INF2120 - Groupe 10 Professeur: Melanie Lord
+ *
+ * @author Guillaume Gagnon
+ * @version 2014-02-12
+ *
+ * Description de la classe: La classe Consommateur est une classe concrete qui
+ * herite de la classe Utilisateur.
+ *
+ * Informations sur l'etudiant: Gagnon Guillaume GAGG15048002
+ * gagnon.guillaume.5@courrier.uqam.ca
+ */
 
 public class Consommateur extends Utilisateur {
 
     /**
      * CONSTANTES
      */
-    private static final int EVAL_MIN = 1;
-    private static final int EVAL_MAX = 5;
+    private static final int EVAL_MIN = 1; // Note d'evaluation minimum
+    private static final int EVAL_MAX = 5; // Note d'evaluation maximum
 
     /**
      * ATTRIBUTS D'INSTANCE
@@ -24,9 +36,9 @@ public class Consommateur extends Utilisateur {
      * tableau evaluations est initialisee a Utilisateur.LONG_TAB et nbrEval est
      * a 0.
      *
-     * @param pseudo Le nom d'utilisateur (pseudonyme) de ce consommateur
-     * @param motPasse Le mot de passe de ce consommateur
-     * @param courriel Le courriel de ce consommateur
+     * @param pseudo Le nom d'utilisateur (pseudonyme) de ce consommateur.
+     * @param motPasse Le mot de passe de ce consommateur.
+     * @param courriel Le courriel de ce consommateur.
      *
      * ANTECEDENTS : le pseudo, le motPasse et le courriel doivent etre valides
      * (non null, non vides, correctement formes, etc.). On suppose aussi que
@@ -53,7 +65,7 @@ public class Consommateur extends Utilisateur {
     /**
      * Cette methode retourne un tableau de type String representant le profil
      * de l’utilisateur. (Les categories de produits qu’il a achetes par le
-     * passe.)
+     * passe.).
      *
      * @return Tableau de type String ou null si aucun produit n'a encore ete
      * achete.
@@ -82,8 +94,8 @@ public class Consommateur extends Utilisateur {
     /**
      * Permet a ce consommateur d’evaluer un fournisseur (recu en parametre).
      *
-     * @param fournisseur Le fournisseur evalue (type Utilisateur)
-     * @param evalScore L'evaluation donnee au fournisseur
+     * @param fournisseur Le fournisseur evalue (type Utilisateur).
+     * @param evalScore L'evaluation donnee au fournisseur.
      *
      * @throws java.lang.ClassCastException Si l’utilisateur passe en parametre
      * n’est pas de type Fournisseur.
@@ -128,9 +140,9 @@ public class Consommateur extends Utilisateur {
     /**
      * Cette methode consiste a ajouter un produit au tableau des achats.
      *
-     * @param produit Le produit a ajouter (Type Produit)
-     * @param quantite La quantite achetee
-     * @throws ExceptionProduitInvalide Si le produit donne est null
+     * @param produit Le produit a ajouter (Type Produit).
+     * @param quantite La quantite achetee.
+     * @throws ExceptionProduitInvalide Si le produit donne est null.
      * @throws Exception Si le produit n’est vendu par aucun fournisseur OU si
      * la quantite achetee est plus petite ou egale a 0 ou si elle est plus
      * grande que la quantite en stock du produit.
@@ -184,18 +196,18 @@ public class Consommateur extends Utilisateur {
      *
      */
     /**
-     * Retourne le tableau des produits achetes par ce consommateur
+     * Retourne le tableau des produits achetes par ce consommateur.
      *
-     * @return Tableau des produits achetes par ce consommateur
+     * @return Tableau des produits achetes par ce consommateur.
      */
     public Produit[] getAchats() {
         return achats;
     }
 
     /**
-     * Retourne le nombre de produits achetes (presents dans tableau achats)
+     * Retourne le nombre de produits achetes (presents dans tableau achats).
      *
-     * @return Le nombre de produits achetes
+     * @return Le nombre de produits achetes.
      */
     public int getNbrAchats() {
         return nbrAchats;
