@@ -23,8 +23,7 @@ public class Fournisseur extends Utilisateur {
      * ATTRIBUTS D'INSTANCE
      */
     private Produit[] produits; // Tableau des produits vendus par ce fournisseur
-    private int nbrProduits; // Le nombre de produits vendus (presents dans le 
-    // tableau des produits)
+    private int nbrProduits; // Le nombre de produits vendus (presents dans le tableau des produits)
 
     /**
      * CONSTRUCTEURS
@@ -240,13 +239,17 @@ public class Fournisseur extends Utilisateur {
      * Getter & Setters
      */
     /**
-     *
-     * @return produits
+     * Retourne le tableau des produits vendus par ce fournisseur.
+     * @return produits Tableau des produits vendus par ce fournisseur.
      */
     public Produit[] getProduits() {
         return produits;
     }
 
+    /**
+     * Retourne Le nombre de produits vendus (presents dans le tableau des produits).
+     * @return Le nombre de produits vendus (presents dans le tableau des produits).
+     */
     public int getNbrProduits() {
         return nbrProduits;
     }
