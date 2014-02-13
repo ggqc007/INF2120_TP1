@@ -204,19 +204,26 @@ public class Fournisseur extends Utilisateur {
     }
 
     /**
+     * Cette methode permet de diminuer la quantite en stock d’un produit vendu.
      *
-     * @param codeProduit
-     * @param quantite
-     * @throws java.lang.Exception
+     * @param codeProduit Code du produit dont on veut diminuer la quantite en
+     * stock.
+     * @param quantite La quantite vendue qu’on veut soustraire a la quantite en
+     * stock.
+     *
+     * @throws Exception Si le code du produit donne ne correspond a aucun des
+     * produits vendus par ce fournisseur OU si la quantite vendue donnee est
+     * plus petite ou egale a 0 ou si elle est plus grande que la quantite en
+     * stock du produit ayant le code donne.
      */
     public void vendre(int codeProduit, int quantite) throws Exception {
         Produit produitTrouve = null;
 
+        // Recherche le produit dans le tableau
         for (int i = 0; i < produits.length; i++) {
-            if (produits[i] instanceof Produit) {
-                if (produits[i].getCode() == codeProduit) {
-                    produitTrouve = produits[i];
-                }
+            if (produits[i] instanceof Produit
+                    && produits[i].getCode() == codeProduit) {
+                produitTrouve = produits[i];
             }
         }
 
