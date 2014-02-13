@@ -1,3 +1,4 @@
+
 /**
  * INF2120 - Groupe 10 Professeur: Melanie Lord
  *
@@ -18,7 +19,7 @@ public class Fournisseur extends Utilisateur {
      */
     private Produit[] produits; // Tableau des produits vendus par ce fournisseur
     private int nbrProduits; // Le nombre de produits vendus (presents dans le 
-                             // tableau des produits)
+    // tableau des produits)
 
     /**
      * CONSTRUCTEURS
@@ -60,34 +61,32 @@ public class Fournisseur extends Utilisateur {
     /**
      * Retourne un tableau contenant toutes les categories differentes recensees
      * sur les produits vendus par ce fournisseur (produits dans le tableau des
-     * produits). Seuls les produits dont la quantite en stock (voir attribut 
-     * quantite de la classe Produit) est strictement plus grande que 0 sont 
+     * produits). Seuls les produits dont la quantite en stock (voir attribut
+     * quantite de la classe Produit) est strictement plus grande que 0 sont
      * consideres pour recenser les categories.
-     * 
-     * @return produitsEnVente Tableau contenant toutes les categories differentes
-     * recensees sur les produits vendus par ce fournisseur.
+     *
+     * @return produitsEnVente Tableau contenant toutes les categories
+     * differentes recensees sur les produits vendus par ce fournisseur.
      */
     @Override
     public String[] compilerProfil() {
-        //String[] produitsEnVente = null;
-        String[] produitsEnVente = null;
+        String[] produitsEnVente = new String[Utilisateur.LONG_TAB];
         int nbrProduitsEnVente = 0;
 
         for (int i = 0; i < produits.length && produits != null; i++) {
-            if (produits[i] instanceof Produit) {
-                if (!(TabUtils.elemEstDansTab(produits[i].getCategorie(), produitsEnVente)) && produits[i].getQuantite() > 0) {
-                    if (produitsEnVente == null) {
-                        produitsEnVente = new String[Utilisateur.LONG_TAB];
-                    }
-                    produitsEnVente[nbrProduitsEnVente] = produits[i].getCategorie();
-                    nbrProduitsEnVente = nbrProduitsEnVente + 1;
-                }
+            if (produits[i] instanceof Produit
+                    && !(TabUtils.elemEstDansTab(produits[i].getCategorie(), produitsEnVente))
+                    && produits[i].getQuantite() > 0) {
+                // Alors on ajoute la categorie au tableau!
+                produitsEnVente[nbrProduitsEnVente] = produits[i].getCategorie();
+                nbrProduitsEnVente = nbrProduitsEnVente + 1;
             }
         }
-
-        if (produitsEnVente != null) {
-            // resize
+        // Ajuste longueur du tab ou mise a null avant retour
+        if (nbrProduitsEnVente > 0) {
             produitsEnVente = TabUtils.copieTab(produitsEnVente, nbrProduitsEnVente);
+        } else {
+            produitsEnVente = null;
         }
         return produitsEnVente;
     }
@@ -108,8 +107,8 @@ public class Fournisseur extends Utilisateur {
             consommateur.ajouterEvaluation(evalScore);
         }
     }
-    
-        /**
+
+    /**
      * Retourne une representation sous forme de chaine de caracteres de ce
      * Fournisseur.
      *
@@ -120,7 +119,7 @@ public class Fournisseur extends Utilisateur {
     public String toString() {
         return super.toString() + " - " + nbrProduits;
     }
-    
+
     /**
      * METHODES D'INSTANCE PUBLIQUES
      */
