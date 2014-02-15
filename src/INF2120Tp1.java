@@ -5,7 +5,6 @@ public class INF2120Tp1 {
         
         Utilisateur con = new Consommateur("joe", "password", "email");
         
-        con.
         
 
     }

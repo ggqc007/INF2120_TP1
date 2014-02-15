@@ -26,7 +26,7 @@ public class Amizone {
     private final static int QTY_MIN_STOCK_AJOUT_FOURNISSEUR = 0; // Quantite min
     // d'un produit en inventaire a vendre pour permettre l'inscription d'un nouveau
     // fournisseur.
-    private final static int MIN_CATEGORIE_RECOMMAND = 1; // Nombre de minimum de 
+    private final static int MIN_CATEGORIE_RECOMMAND = 1; // Nombre de minimum de       !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! a voir...
     // categorie en commun necessaire pour une recommandation.
 
     /**
@@ -100,9 +100,39 @@ public class Amizone {
         return utilisateurInteressant;
     }
 
+    /**
+     * Cette methode retourne une liste de tous les produits vendus par le fournisseur
+     * donne qui sont potentiellement interessants pour le consommateur donne. Les
+     * produits potentiellement interessants pour le consommateur donne sont ceux
+     * qui possedent une categorie qui est presente dans le profil du consommateur.
+     * 
+     * @param fournisseur Le fournisseur
+     * @param consommateur Le consommateur
+     * @return Liste de tous les produits vendus par le fournisseur qui sont
+     * potentiellement interessants pour le consommateur.
+     * @throws Exception Si le fournisseur ou le consommateur donne est null. 
+     */
     public ArrayList<Produit> recommanderProduits(Fournisseur fournisseur,
             Consommateur consommateur) throws Exception {
-        return null; //A FAIRE
+        ArrayList<Produit> listeDesProduits = new ArrayList<Produit>();
+        String[] profilConsommateur = consommateur.compilerProfil();
+        Produit[] produitsFournisseur = fournisseur.getProduits();
+        
+        if (fournisseur == null || consommateur == null) {
+            throw new Exception(ERR_MSG_UTILIS_NULL);
+        } else {
+            if (profilConsommateur != null) {
+                for (int i = 0; i < produitsFournisseur.length; i++) {
+                    if (produitsFournisseur[i] instanceof Produit 
+                            && produitsFournisseur[i].getQuantite() > 0) {
+                        if (TabUtils.elemEstDansTab(produitsFournisseur[i].getCategorie(), profilConsommateur)) {
+                            listeDesProduits.add(produitsFournisseur[i]);
+                        }
+                    }
+                }
+            }
+        }
+        return listeDesProduits;
     }
 
     public void effectuerTransaction(Fournisseur fournisseur,
