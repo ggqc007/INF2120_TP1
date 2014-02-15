@@ -135,10 +135,35 @@ public class Amizone {
         return listeDesProduits;
     }
 
+    /**
+     * Cette methode permet d’effectuer une transaction achat/vente entre un fournisseur
+     * et un consommateur. Elle permet au fournisseur donne de vendre le produit
+     * du code donne, de la quantite donnee, au consommateur donne (autrement dit,
+     * permet au consommateur donne, d’acheter le produit du code donne, de la 
+     * quantite donnee, et du fournisseur donne). 
+     * 
+     * @param fournisseur Le fournisseur qui vend le Produit.
+     * @param consommateur Le consommateur qui achete le Produit.
+     * @param codeProduit Le code du Produit pour cette transaction.
+     * @param quantite La quantite du produit transige
+     * @throws Exception Si le code du produit donne ne correspond a aucun des produits
+     * vendus par le fournisseur donne OU si la quantite donnee est plus petite
+     * ou egale a 0 ou si elle est plus grande que la quantite en stock du produit
+     * ayant le code donne, chez le fournisseur donne.
+     */
     public void effectuerTransaction(Fournisseur fournisseur,
             Consommateur consommateur, int codeProduit, int quantite)
             throws Exception {
-        //A FAIRE
+        Produit produitTransige = fournisseur.obtenirProduit(codeProduit);
+        
+        if (produitTransige == null) {
+            throw new Exception(Utilisateur.MSG_ERR_VENTE_PROD);
+        } else if (quantite <= 0 || quantite > produitTransige.getQuantite()) {
+            throw new Exception(Utilisateur. MSG_ERR_QTE);
+        } else {
+            fournisseur.vendre(codeProduit, quantite); // Vente du fournisseur
+            consommateur.acheter(produitTransige, quantite); // Achat du consommateur
+        }
     }
 
     public ArrayList<Produit> rechercherProduitsParMotCle(String motCle) {

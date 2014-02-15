@@ -138,7 +138,7 @@ public class Consommateur extends Utilisateur {
      * METHODES D'INSTANCE PUBLIQUES
      */
     /**
-     * Cette methode consiste a ajouter un produit au tableau des achats.
+     * Cette methode consiste a ajouter un produit au tableau des achats.             !!!!!!!!!!!!!!!!!!! a ajoute UNE COPIE du produit??????
      *
      * @param produit Le produit a ajouter (Type Produit).
      * @param quantite La quantite achetee.
