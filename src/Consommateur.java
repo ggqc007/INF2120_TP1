@@ -193,7 +193,6 @@ public class Consommateur extends Utilisateur {
 
     /**
      * Getter & Setters
-     *
      */
     /**
      * Retourne le tableau des produits achetes par ce consommateur.
