@@ -333,6 +333,7 @@ public class Amizone {
         boolean trouve = false;
         String descriptionProduit = produit.getDescription().toLowerCase();
         motCle = motCle.toLowerCase();
+        motCle = " "+ motCle +" "; // Ajout d'espaces avant/apres pour recherche par mot
         
         if (descriptionProduit.contains(motCle)) {
             trouve = true;
