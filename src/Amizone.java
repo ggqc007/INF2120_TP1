@@ -101,29 +101,30 @@ public class Amizone {
     }
 
     /**
-     * Cette methode retourne une liste de tous les produits vendus par le fournisseur
-     * donne qui sont potentiellement interessants pour le consommateur donne. Les
-     * produits potentiellement interessants pour le consommateur donne sont ceux
-     * qui possedent une categorie qui est presente dans le profil du consommateur.
-     * 
+     * Cette methode retourne une liste de tous les produits vendus par le
+     * fournisseur donne qui sont potentiellement interessants pour le
+     * consommateur donne. Les produits potentiellement interessants pour le
+     * consommateur donne sont ceux qui possedent une categorie qui est presente
+     * dans le profil du consommateur.
+     *
      * @param fournisseur Le fournisseur
      * @param consommateur Le consommateur
      * @return Liste de tous les produits vendus par le fournisseur qui sont
      * potentiellement interessants pour le consommateur.
-     * @throws Exception Si le fournisseur ou le consommateur donne est null. 
+     * @throws Exception Si le fournisseur ou le consommateur donne est null.
      */
     public ArrayList<Produit> recommanderProduits(Fournisseur fournisseur,
             Consommateur consommateur) throws Exception {
         ArrayList<Produit> listeDesProduits = new ArrayList<Produit>();
         String[] profilConsommateur = consommateur.compilerProfil();
         Produit[] produitsFournisseur = fournisseur.getProduits();
-        
+
         if (fournisseur == null || consommateur == null) {
             throw new Exception(ERR_MSG_UTILIS_NULL);
         } else {
             if (profilConsommateur != null) {
                 for (int i = 0; i < produitsFournisseur.length; i++) {
-                    if (produitsFournisseur[i] instanceof Produit 
+                    if (produitsFournisseur[i] instanceof Produit
                             && produitsFournisseur[i].getQuantite() > 0) {
                         if (TabUtils.elemEstDansTab(produitsFournisseur[i].getCategorie(), profilConsommateur)) {
                             listeDesProduits.add(produitsFournisseur[i]);
@@ -136,30 +137,30 @@ public class Amizone {
     }
 
     /**
-     * Cette methode permet d’effectuer une transaction achat/vente entre un fournisseur
-     * et un consommateur. Elle permet au fournisseur donne de vendre le produit
-     * du code donne, de la quantite donnee, au consommateur donne (autrement dit,
-     * permet au consommateur donne, d’acheter le produit du code donne, de la 
-     * quantite donnee, et du fournisseur donne). 
-     * 
+     * Cette methode permet d’effectuer une transaction achat/vente entre un
+     * fournisseur et un consommateur. Elle permet au fournisseur donne de
+     * vendre le produit du code donne, de la quantite donnee, au consommateur
+     * donne (autrement dit, permet au consommateur donne, d’acheter le produit
+     * du code donne, de la quantite donnee, et du fournisseur donne).
+     *
      * @param fournisseur Le fournisseur qui vend le Produit.
      * @param consommateur Le consommateur qui achete le Produit.
      * @param codeProduit Le code du Produit pour cette transaction.
      * @param quantite La quantite du produit transige
-     * @throws Exception Si le code du produit donne ne correspond a aucun des produits
-     * vendus par le fournisseur donne OU si la quantite donnee est plus petite
-     * ou egale a 0 ou si elle est plus grande que la quantite en stock du produit
-     * ayant le code donne, chez le fournisseur donne.
+     * @throws Exception Si le code du produit donne ne correspond a aucun des
+     * produits vendus par le fournisseur donne OU si la quantite donnee est
+     * plus petite ou egale a 0 ou si elle est plus grande que la quantite en
+     * stock du produit ayant le code donne, chez le fournisseur donne.
      */
     public void effectuerTransaction(Fournisseur fournisseur,
             Consommateur consommateur, int codeProduit, int quantite)
             throws Exception {
         Produit produitTransige = fournisseur.obtenirProduit(codeProduit);
-        
+
         if (produitTransige == null) {
             throw new Exception(Utilisateur.MSG_ERR_VENTE_PROD);
         } else if (quantite <= 0 || quantite > produitTransige.getQuantite()) {
-            throw new Exception(Utilisateur. MSG_ERR_QTE);
+            throw new Exception(Utilisateur.MSG_ERR_QTE);
         } else {
             fournisseur.vendre(codeProduit, quantite); // Vente du fournisseur
             consommateur.acheter(produitTransige, quantite); // Achat du consommateur
@@ -169,30 +170,31 @@ public class Amizone {
     /**
      * Cette methode retourne une liste de tous les produits (parmi les produits
      * vendus par tous les fournisseurs) dont la description contient le mot cle
-     * donne. Pour simplifier la recherche, nous supposerons ici que la description
-     * des produits est une suite de mots separes uniquement par un ou des espaces
-     * (aucun signe de ponctuation) et que le mot cle donne est un seul mot, sans
-     * espace. La recherche ne prend pas compte de la casse. Les produits retournes
-     * ont une quantite en stock strictement plus grande que 0. Un meme produit 
-     * peut revenir plusieurs fois dans la liste retournee si celui-ci est vendu
-     * par differents fournisseurs (et qu’il correspond à la recherche, evidemment).
-     * Si aucun produit n’est trouve, la methode retourne une liste vide.
-     * 
+     * donne. Pour simplifier la recherche, nous supposerons ici que la
+     * description des produits est une suite de mots separes uniquement par un
+     * ou des espaces (aucun signe de ponctuation) et que le mot cle donne est
+     * un seul mot, sans espace. La recherche ne prend pas compte de la casse.
+     * Les produits retournes ont une quantite en stock strictement plus grande
+     * que 0. Un meme produit peut revenir plusieurs fois dans la liste
+     * retournee si celui-ci est vendu par differents fournisseurs (et qu’il
+     * correspond à la recherche, evidemment). Si aucun produit n’est trouve, la
+     * methode retourne une liste vide.
+     *
      * @param motCle Mot cle recherche.
      * @return Liste de Produit ou liste vide si aucun produit n'est trouve.
      */
     public ArrayList<Produit> rechercherProduitsParMotCle(String motCle) {
         ArrayList<Produit> resultatRech = new ArrayList<Produit>();
         Produit[] produitsFournisseurs;
-        
+
         // Recherche les listes de produits de tous les fournisseurs
         for (int i = 0; i < utilisateurs.size(); i++) {
             if (utilisateurs.get(i) instanceof Fournisseur) {
-                produitsFournisseurs = ((Fournisseur)utilisateurs.get(i)).getProduits();
+                produitsFournisseurs = ((Fournisseur) utilisateurs.get(i)).getProduits();
                 // Recherche dans la liste d'un fournisseur                                 !!!!!! TODO p-e sortir ca dans une methode prive????
                 for (int j = 0; j < produitsFournisseurs.length; j++) {
-                    if (produitsFournisseurs[j] instanceof Produit 
-                            && rechStringDansDescriptionProduit(produitsFournisseurs[j], motCle) 
+                    if (produitsFournisseurs[j] instanceof Produit
+                            && rechStringDansDescriptionProduit(produitsFournisseurs[j], motCle)
                             && produitsFournisseurs[j].getQuantite() > 0) {
                         // Ajoute le produit!
                         resultatRech.add(produitsFournisseurs[j]);
@@ -200,13 +202,42 @@ public class Amizone {
                 }
             }
         }
-        
-        
+
         return resultatRech;
     }
 
+    /**
+     * Cette methode retourne une liste des fournisseurs qui vendent le produit
+     * du code donne et dont la quantite (en stock) est strictement plus grande
+     * que 0. De plus, les fournisseurs retournes doivent etre ordonnes selon
+     * leur evaluation (en ordre decroissant des évaluations : du meilleur (eval
+     * 5) au pire (eval 1)). Si aucun fournisseur n’est trouve, la methode
+     * retourne une liste vide.
+     *
+     * @param codeProduit Le produit recherche.
+     * @return Liste des fournisseurs avec ce produit a vendre et ordonnes selon
+     * leur evaluation (du meilleur (eval 5) au pire (eval 1)). Si aucun
+     * fournisseur n’est trouve, la methode retourne une liste vide.
+     */
     public ArrayList<Fournisseur> rechercherFournisseurParEvaluation(int codeProduit) {
-        return null; //A FAIRE
+        ArrayList<Fournisseur> fournisseurs = rechFournisseursDansUtilisateurs();
+        ArrayList<Fournisseur> fournisseursAvecLeProduit = new ArrayList<Fournisseur>();
+
+        // Creation d'une liste des fournisseurs avec le produit a vendre et avec
+        // la quantite minimum de 1 en inventaire.
+        for (int i = 0; i < fournisseurs.size(); i++) {
+            if (fournisseurs.get(i).obtenirProduit(codeProduit) != null
+                    && fournisseurs.get(i).obtenirProduit(codeProduit).getQuantite() > 0) {
+                fournisseursAvecLeProduit.add(fournisseurs.get(i));
+            }
+        }
+
+        // Mise en ordre des Fournisseur en fonction de l'evaluation
+        if (fournisseursAvecLeProduit.size() > 0) {
+            sortUtilisateursParEval(fournisseursAvecLeProduit);
+        }
+        
+        return fournisseursAvecLeProduit;
     }
 
     /**
@@ -225,7 +256,7 @@ public class Amizone {
      * METHODES PRIVEE
      */
     /**
-     * Methode utilitaire qui la liste d'utilisateurs pour savoir si le id de 
+     * Methode utilitaire qui la liste d'utilisateurs pour savoir si le id de
      * l'utilisateur en parametre est deja present.
      *
      * @param utilisateur Utilisateur a verifier.
@@ -242,7 +273,7 @@ public class Amizone {
     }
 
     /**
-     * Methode utilitaire qui verifie si un fournisseur a un produit en stock a 
+     * Methode utilitaire qui verifie si un fournisseur a un produit en stock a
      * vendre (quantite > 0).
      *
      * @param fournisseur Le fournisseur (Utilisateur) qui desire s'inscrire.
@@ -264,9 +295,9 @@ public class Amizone {
     }
 
     /**
-     * Methode utilitaire qui recherche parmis les utilisateurs du type oppose si
-     * au moins MIN_CATEGORIE_RECOMMAND categorie est en commun avec l'utilisateur
-     * en parametre.
+     * Methode utilitaire qui recherche parmis les utilisateurs du type oppose
+     * si au moins MIN_CATEGORIE_RECOMMAND categorie est en commun avec
+     * l'utilisateur en parametre.
      *
      * @param utilisateur Utilisateur qui recherche des profils comparables.
      * @return Liste des utilisateurs interessants ou liste vide si aucun
@@ -299,8 +330,9 @@ public class Amizone {
     }
 
     /**
-     * Methode utilitaire qui compare les profils de deux Utilisateurs et retourne
-     * vrai si MIN_CATEGORIE_RECOMMAND categorie est en commun.                        !!!!!!!!!!!!!!!!!!!!!!!!!!! MIN_CATEGORIE_RECOMMAND sert a quoi?????
+     * Methode utilitaire qui compare les profils de deux Utilisateurs et
+     * retourne vrai si MIN_CATEGORIE_RECOMMAND categorie est en commun.
+     * !!!!!!!!!!!!!!!!!!!!!!!!!!! MIN_CATEGORIE_RECOMMAND sert a quoi?????
      *
      * @param user1 Utilisateur
      * @param user2
@@ -320,11 +352,28 @@ public class Amizone {
         }
         return estComparable;
     }
-    
+
     /**
-     * Methode utilitaire qui recherche un mot cle à l'interieur de la description
-     * d'un produit.
-     * 
+     * Methode utilitaire qui retourne la liste des fournisseurs (Fournisseur)
+     * inscrit au site.
+     *
+     * @return Liste de fournisseurs ou vide si aucun.
+     */
+    private ArrayList<Fournisseur> rechFournisseursDansUtilisateurs() {
+        ArrayList<Fournisseur> listeFournisseurs = new ArrayList<Fournisseur>();
+
+        for (int i = 0; i < utilisateurs.size(); i++) {
+            if (utilisateurs.get(i) instanceof Fournisseur) {
+                listeFournisseurs.add((Fournisseur) utilisateurs.get(i));
+            }
+        }
+        return listeFournisseurs;
+    }
+
+    /**
+     * Methode utilitaire qui recherche un mot cle à l'interieur de la
+     * description d'un produit.
+     *
      * @param produit Le produit pour la recherche
      * @param motCle Le mot cle recherche
      * @return true si trouve ou false sinon.
@@ -333,12 +382,38 @@ public class Amizone {
         boolean trouve = false;
         String descriptionProduit = produit.getDescription().toLowerCase();
         motCle = motCle.toLowerCase();
-        motCle = " "+ motCle +" "; // Ajout d'espaces avant/apres pour recherche par mot
-        
+        motCle = " " + motCle + " "; // Ajout d'espaces avant/apres pour recherche par mot
+
         if (descriptionProduit.contains(motCle)) {
             trouve = true;
         }
         return trouve;
+    }
+
+    /**
+     * Methode utilitaire qui retourne une listes de fournisseurs, dans l'ordre
+     * decroissant de la moyenne de leurs notes d'evaluations.
+     *
+     * @param fournisseurs La liste de fournisseurs a trier.
+     * @return La liste de fournisseurs trie.
+     */
+    private ArrayList<Fournisseur> sortUtilisateursParEval(ArrayList<Fournisseur> fournisseurs) {
+        ArrayList<Fournisseur> sortedFournisseurs = new ArrayList<Fournisseur>();
+
+        int position; // Indice de position pour dans le tableau trie
+        double moyUtilisateurAPlacer = 0.0; // Moyenne de l'utilisateur qui recherche sa position
+
+        for (int i = 0; i < fournisseurs.size(); i++) {
+            position = 0;
+            moyUtilisateurAPlacer = fournisseurs.get(i).evaluationMoyenne();
+            // Boucle pour trouver son emplacement, ordre decroissant, dans le tableau
+            while (position < sortedFournisseurs.size()
+                    && ((Double) sortedFournisseurs.get(position).evaluationMoyenne()).compareTo(moyUtilisateurAPlacer) > 0) {
+                position = position + 1;
+            }
+            sortedFournisseurs.add(position, fournisseurs.get(i));
+        }
+        return sortedFournisseurs;
     }
 
 }
