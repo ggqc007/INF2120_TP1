@@ -189,7 +189,7 @@ public class Amizone {
         for (int i = 0; i < utilisateurs.size(); i++) {
             if (utilisateurs.get(i) instanceof Fournisseur) {
                 produitsFournisseurs = ((Fournisseur)utilisateurs.get(i)).getProduits();
-                // Recherche dans la liste d'un fournisseur
+                // Recherche dans la liste d'un fournisseur                                 !!!!!! TODO p-e sortir ca dans une methode prive????
                 for (int j = 0; j < produitsFournisseurs.length; j++) {
                     if (produitsFournisseurs[j] instanceof Produit 
                             && rechStringDansDescriptionProduit(produitsFournisseurs[j], motCle) 
