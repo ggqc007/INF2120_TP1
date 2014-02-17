@@ -62,9 +62,36 @@ public class TestsAmizone {
         testGetUtilisateurs();
         testRecommanderUtilisateurs();
         testRecommanderProduits();
+        testEffectuerTransaction();
 
     }
 
+    /**
+     * TEST EFFECTUER TRANSACTION
+     */
+    public static void testEffectuerTransaction() {
+        System.out.println("\n##### EFFECTUER TRANSACTION #####");
+
+        try {
+            System.out.print("Test vente d'un produit non disponible avec ce fournisseur...");
+            amizone1.effectuerTransaction((Fournisseur) f1, (Consommateur) c6, 2, 1);
+            System.out.println("FAILED!!!");
+        } catch (Exception e) {
+            System.out.println("OK! (" + e + ")");
+        }
+
+        try {
+            System.out.print("Test vente d'un produit plus en stock chez ce fournisseur (Quantite 0)...");
+            amizone1.effectuerTransaction((Fournisseur) f1, (Consommateur) c6, 3, 1);
+            System.out.println("FAILED!!!");
+        } catch (Exception e) {
+            System.out.println("OK! (" + e + ")");
+        }
+    }
+
+    /**
+     * TEST RECOMMANDER PRODUITS
+     */
     public static void testRecommanderProduits() {
         System.out.println("\n##### RECOMMANDER PRODUITS #####");
         try {
@@ -104,6 +131,9 @@ public class TestsAmizone {
         }
     }
 
+    /**
+     * TEST RECOMMANDER UTILISATEURS
+     */
     public static void testRecommanderUtilisateurs() {
         System.out.println("\n##### RECOMMANDER UTILISATEURS #####");
         try {
@@ -149,11 +179,17 @@ public class TestsAmizone {
 
     }
 
+    /**
+     * TEST GETTER (GET UTILISATEURS)
+     */
     public static void testGetUtilisateurs() {
         System.out.println("\n##### TEST GETTER UTILISATEURS (8) #####");
         System.out.println("Test du getter des utilisateurs: " + amizone1.getUtilisateurs().size() + " sur 8 en memoire!");
     }
 
+    /**
+     * TEST INSCRIRE UTILISATEUR
+     */
     public static void testInscrireUtilisateur() {
         System.out.println("\n##### TEST INSCRIRE (8) UTILISATEURS #####");
         // Ajoute 8 utilisateurs 
@@ -211,6 +247,9 @@ public class TestsAmizone {
         }
     }
 
+    /**
+     * TEST DU CONSTRUCTEUR
+     */
     public static void testConstructeur() {
         System.out.println("##### TEST DU CONSTRUCTEUR #####");
         System.out.println("Construction de 5 fournisseurs et 5 consommateurs... ");
