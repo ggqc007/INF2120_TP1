@@ -92,7 +92,7 @@ public class Amizone {
             throws Exception {
         ArrayList<Utilisateur> utilisateurInteressant;// = new ArrayList<Utilisateur>();
 
-        if (Utilisateur == null) {
+        if (utilisateur == null) {
             throw new Exception(ERR_MSG_UTILIS_NULL);
         } else {
             utilisateurInteressant = rechUtilisateursInteressants(utilisateur);
@@ -116,12 +116,13 @@ public class Amizone {
     public ArrayList<Produit> recommanderProduits(Fournisseur fournisseur,
             Consommateur consommateur) throws Exception {
         ArrayList<Produit> listeDesProduits = new ArrayList<Produit>();
-        String[] profilConsommateur = consommateur.compilerProfil();
-        Produit[] produitsFournisseur = fournisseur.getProduits();
 
         if (fournisseur == null || consommateur == null) {
             throw new Exception(ERR_MSG_UTILIS_NULL);
         } else {
+            String[] profilConsommateur = consommateur.compilerProfil();
+            Produit[] produitsFournisseur = fournisseur.getProduits();
+            
             if (profilConsommateur != null) {
                 for (int i = 0; i < produitsFournisseur.length; i++) {
                     if (produitsFournisseur[i] instanceof Produit
@@ -236,7 +237,7 @@ public class Amizone {
         if (fournisseursAvecLeProduit.size() > 0) {
             sortUtilisateursParEval(fournisseursAvecLeProduit);
         }
-        
+
         return fournisseursAvecLeProduit;
     }
 
@@ -401,7 +402,7 @@ public class Amizone {
         ArrayList<Fournisseur> sortedFournisseurs = new ArrayList<Fournisseur>();
 
         int position; // Indice de position pour dans le tableau trie
-        double moyUtilisateurAPlacer = 0.0; // Moyenne de l'utilisateur qui recherche sa position
+        double moyUtilisateurAPlacer; // Moyenne de l'utilisateur qui recherche sa position
 
         for (int i = 0; i < fournisseurs.size(); i++) {
             position = 0;
