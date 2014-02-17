@@ -63,21 +63,47 @@ public class TestsAmizone {
         testRecommanderUtilisateurs();
         testRecommanderProduits();
 
-
     }
 
     public static void testRecommanderProduits() {
         System.out.println("\n##### RECOMMANDER PRODUITS #####");
         try {
             System.out.print("Test recommander produit avec utilisateur null...");
-            amizone1.recommanderProduits((Fournisseur)f0, (Consommateur)c11);
+            amizone1.recommanderProduits((Fournisseur) f0, (Consommateur) c11);
             System.out.println("FAILED!!!");
         } catch (Exception e) {
-            System.out.println("OK! ("+ e +")");
+            System.out.println("OK! (" + e + ")");
         }
-        
-        
+        try {
+            System.out.print("Test recommander produit, aucun trouve (chaine vide)...");
+            amizone1.recommanderProduits((Fournisseur) f4, (Consommateur) c6);
+            if (amizone1.recommanderProduits((Fournisseur) f4, (Consommateur) c6).isEmpty()) {
+                System.out.println("OK! (" + amizone1.recommanderProduits((Fournisseur) f4, (Consommateur) c6) + ")");
+            } else {
+                System.out.println("FAILED!!!");
+            }
+        } catch (Exception e) {
+            System.out.println("testRecommanderProduit #1 failed (" + e + ")");
+        }
+
+        try {
+            System.out.print("Test recommander produit...");
+            amizone1.recommanderProduits((Fournisseur) f1, (Consommateur) c6);
+            System.out.println("OK! (" + amizone1.recommanderProduits((Fournisseur) f1, (Consommateur) c6) + ")");
+        } catch (Exception e) {
+            System.out.println("testRecommanderProduit #2 failed (" + e + ")");
+        }
+
+        try {
+            System.out.print("Test recommander produit (Item 3 maintenant 0 en stock)...");
+            amizone1.effectuerTransaction((Fournisseur) f1, (Consommateur) c6, 3, 8); // vente de tous les items 3 en stock 
+            amizone1.recommanderProduits((Fournisseur) f1, (Consommateur) c6);
+            System.out.println("OK! (" + amizone1.recommanderProduits((Fournisseur) f1, (Consommateur) c6) + ")");
+        } catch (Exception e) {
+            System.out.println("testRecommanderProduit #3 failed (" + e + ")");
+        }
     }
+
     public static void testRecommanderUtilisateurs() {
         System.out.println("\n##### RECOMMANDER UTILISATEURS #####");
         try {
@@ -101,27 +127,26 @@ public class TestsAmizone {
         } catch (Exception e) {
             System.out.println("testRecommanderUtilisateurs #2 failed" + e);
         }
-        
+
         // test les resultats valides
-        
         try {
             System.out.print("Test recommandation avec un fournisseur...");
-            amizone1.effectuerTransaction((Fournisseur)f2, (Consommateur)c6, 12, 1);
+            amizone1.effectuerTransaction((Fournisseur) f2, (Consommateur) c6, 12, 1);
             if (amizone1.recommanderUtilisateurs(f2).isEmpty()) {
                 System.out.println("FAILED!!!");
             } else {
-                System.out.println("OK! ("+ amizone1.recommanderUtilisateurs(f2) +")");
+                System.out.println("OK! (" + amizone1.recommanderUtilisateurs(f2) + ")");
             }
             System.out.print("Test recommandation avec un consommateur...");
             if (amizone1.recommanderUtilisateurs(c6).isEmpty()) {
                 System.out.println("FAILED!!!");
             } else {
-                System.out.println("OK! ("+ amizone1.recommanderUtilisateurs(c6) +")");
+                System.out.println("OK! (" + amizone1.recommanderUtilisateurs(c6) + ")");
             }
         } catch (Exception e) {
             System.out.println("testRecommanderUtilisateurs #3 failed" + e);
         }
-        
+
     }
 
     public static void testGetUtilisateurs() {

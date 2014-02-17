@@ -157,14 +157,18 @@ public class Amizone {
             Consommateur consommateur, int codeProduit, int quantite)
             throws Exception {
         Produit produitTransige = fournisseur.obtenirProduit(codeProduit);
-
+        
         if (produitTransige == null) {
             throw new Exception(Utilisateur.MSG_ERR_VENTE_PROD);
         } else if (quantite <= 0 || quantite > produitTransige.getQuantite()) {
             throw new Exception(Utilisateur.MSG_ERR_QTE);
         } else {
-            fournisseur.vendre(codeProduit, quantite); // Vente du fournisseur
+            // NB. consommateur.acheter doit etre traite avant fournisseur.vendre
+            // sinon la quantite de la copie du Produit dans consommateur est invalide,
+            // la quantite de l'instance du Produit etant diminue dans la fonction
+            // vendre de fournisseur.
             consommateur.acheter(produitTransige, quantite); // Achat du consommateur
+            fournisseur.vendre(codeProduit, quantite); // Vente du fournisseur
         }
     }
 
