@@ -113,8 +113,7 @@ public class Consommateur extends Utilisateur {
         } else if (evalScore < EVAL_MIN || evalScore > EVAL_MAX) {
             throw new Exception(Utilisateur.MSG_ERR_EVAL_3);
         } else if (!(TabUtils.elemEstDansTab(fournisseur.getId(), fournisseurs()))) {
-            // Recherche dans tab fournisseurs de cette classe pour savoir si 
-            // utilisateur en parametre est present
+            // Recherche dans tab pour une historique de transaction...
             throw new Exception(Utilisateur.MSG_ERR_EVAL_2);
         } else {
             fournisseur.ajouterEvaluation(evalScore);

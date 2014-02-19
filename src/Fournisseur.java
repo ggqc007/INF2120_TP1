@@ -110,8 +110,7 @@ public class Fournisseur extends Utilisateur {
      * est invalide.
      */
     @Override
-    public void evaluer(Utilisateur consommateur, int evalScore)
-            throws ClassCastException, NullPointerException, Exception {
+    public void evaluer(Utilisateur consommateur, int evalScore) throws Exception {
         if (consommateur == null) {
             throw new NullPointerException();
         } else if (!(consommateur instanceof Consommateur)) {
@@ -120,7 +119,7 @@ public class Fournisseur extends Utilisateur {
             throw new Exception(Utilisateur.MSG_ERR_EVAL_3);
         } else if (!(TabUtils.elemEstDansTab(this.getId(),
                 ((Consommateur) consommateur).fournisseurs()))) {
-            // Si n'est pas dans tableau... j'ai fait un cast car consommateur en parametre
+            // Si n'est pas dans tableau... cast car consommateur en parametre
             // est de type Utilisateur donc methode fournisseurs() n'etait pas visible...
             throw new Exception(Utilisateur.MSG_ERR_EVAL_1);
         } else {

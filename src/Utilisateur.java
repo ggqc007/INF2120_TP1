@@ -17,7 +17,7 @@ public abstract class Utilisateur {
     /**
      * CONSTANTES
      */
-    //Messages d'erreurs
+    // Messages d'erreurs
     public static final String MSG_ERR_EVAL_1 = "Erreur, ce fournisseur ne peut "
             + "pas evaluer ce consommateur.";
     public static final String MSG_ERR_EVAL_2 = "Erreur, ce consommateur ne peut "
@@ -35,7 +35,7 @@ public abstract class Utilisateur {
 
     private static final int EVAL_MIN = 1;
     private static final int EVAL_MAX = 5;
-    //longueur des tableaux
+    // Longueur des tableaux
     public static final int LONG_TAB = 100; // Longueur des tableaux
 
     /**
