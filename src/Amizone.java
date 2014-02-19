@@ -1,17 +1,17 @@
+
 /**
  * INF2120 - Groupe 10 Professeur: Melanie Lord
  *
- * @author Guillaume Gagnon
- * Code Permanent: GAGG15048002
- * Courriel: gagnon.guillaume.5@courrier.uqam.ca
+ * @author Guillaume Gagnon Code Permanent: GAGG15048002 Courriel:
+ * gagnon.guillaume.5@courrier.uqam.ca
  * @version 2014-02-12
  *
  * Description de la classe: Cette classe met en relation les consommateurs et
- * les fournisseurs. Elle permet, entre autres, a un utilisateur de s’inscrire au
- * site dans le but de consommer des produits vendus par des fournisseurs ou de 
- * vendre des produits aux consommateurs. Elle fournit aussi des services de 
+ * les fournisseurs. Elle permet, entre autres, a un utilisateur de s’inscrire
+ * au site dans le but de consommer des produits vendus par des fournisseurs ou
+ * de vendre des produits aux consommateurs. Elle fournit aussi des services de
  * recommandations (d’utilisateurs et de produits) ainsi que des services de
- * recherche de produits. 
+ * recherche de produits.
  */
 
 import java.util.ArrayList;
@@ -30,8 +30,6 @@ public class Amizone {
     private final static int QTY_MIN_STOCK_AJOUT_FOURNISSEUR = 0; // Quantite min
     // d'un produit en inventaire a vendre pour permettre l'inscription d'un nouveau
     // fournisseur.
-    private final static int MIN_CATEGORIE_RECOMMAND = 1; // Nombre de minimum de       !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! a voir...
-    // categorie en commun necessaire pour une recommandation.
 
     /**
      * ATTRIBUTS D'INSTANCE
@@ -68,7 +66,6 @@ public class Amizone {
         } else if (estDejaMembre(utilisateur)) {
             throw new Exception(ERR_MSG_UTILIS_EXISTANT);
         } else if (utilisateur instanceof Fournisseur && !fournisseurAvecProduitAVendre(utilisateur)) {
-            // Si c'est un fournisseur et qu'il n'a pas de produit stock a vendre...
             throw new Exception(ERR_MSG_FOURN_AUCUN_PRODUIT);
         } else {
             utilisateurs.add(utilisateur);
@@ -94,7 +91,7 @@ public class Amizone {
      */
     public ArrayList<Utilisateur> recommanderUtilisateurs(Utilisateur utilisateur)
             throws Exception {
-        ArrayList<Utilisateur> utilisateurInteressant;// = new ArrayList<Utilisateur>();
+        ArrayList<Utilisateur> utilisateurInteressant;
 
         if (utilisateur == null) {
             throw new Exception(ERR_MSG_UTILIS_NULL);
@@ -120,12 +117,14 @@ public class Amizone {
     public ArrayList<Produit> recommanderProduits(Fournisseur fournisseur,
             Consommateur consommateur) throws Exception {
         ArrayList<Produit> listeDesProduits = new ArrayList<Produit>();
+        String[] profilConsommateur;
+        Produit[] produitsFournisseur;
 
         if (fournisseur == null || consommateur == null) {
             throw new Exception(ERR_MSG_UTILIS_NULL);
         } else {
-            String[] profilConsommateur = consommateur.compilerProfil();
-            Produit[] produitsFournisseur = fournisseur.getProduits();
+            profilConsommateur = consommateur.compilerProfil();
+            produitsFournisseur = fournisseur.getProduits();
 
             if (profilConsommateur != null) {
                 for (int i = 0; i < produitsFournisseur.length; i++) {
@@ -200,12 +199,11 @@ public class Amizone {
         for (int i = 0; i < utilisateurs.size(); i++) {
             if (utilisateurs.get(i) instanceof Fournisseur) {
                 produitsFournisseurs = ((Fournisseur) utilisateurs.get(i)).getProduits();
-                // Recherche dans la liste d'un fournisseur                                 !!!!!! TODO p-e sortir ca dans une methode prive????
+                // Recherche mot cle dans la liste des produits d'un fournisseur
                 for (int j = 0; j < produitsFournisseurs.length; j++) {
                     if (produitsFournisseurs[j] instanceof Produit
                             && rechStringDansDescriptionProduit(produitsFournisseurs[j], motCle)
                             && produitsFournisseurs[j].getQuantite() > 0) {
-                        // Ajoute le produit!
                         resultatRech.add(produitsFournisseurs[j]);
                     }
                 }
@@ -263,8 +261,8 @@ public class Amizone {
      * METHODES PRIVEE
      */
     /**
-     * Methode utilitaire qui la liste d'utilisateurs pour savoir si le id de
-     * l'utilisateur en parametre est deja present.
+     * Methode utilitaire qui regarde la liste d'utilisateurs pour savoir si le id
+     * de l'utilisateur en parametre est deja present.
      *
      * @param utilisateur Utilisateur a verifier.
      * @return Vrai si utilisateur est deja present.
@@ -338,12 +336,11 @@ public class Amizone {
 
     /**
      * Methode utilitaire qui compare les profils de deux Utilisateurs et
-     * retourne vrai si MIN_CATEGORIE_RECOMMAND categorie est en commun.
-     * !!!!!!!!!!!!!!!!!!!!!!!!!!! MIN_CATEGORIE_RECOMMAND sert a quoi?????
-     *
-     * @param user1 Utilisateur
-     * @param user2
-     * @return
+     * retourne vrai si une categorie est en commun.
+     * 
+     * @param userRecherche Utilisateur qui recherche
+     * @param userOffre Utilisateur qui offre
+     * @return Vrai si une categorie est presente dans les 2 utilisateurs
      */
     private boolean profilComparable(Utilisateur userRecherche, Utilisateur userOffre) {
         boolean estComparable = false;
@@ -406,19 +403,21 @@ public class Amizone {
      */
     private ArrayList<Fournisseur> sortUtilisateursParEval(ArrayList<Fournisseur> fournisseurs) {
         ArrayList<Fournisseur> sortedFournisseurs = new ArrayList<Fournisseur>();
-        double meilleurMoyenne; // meilleur moyenne trouve
-        Fournisseur meilleurFournisseur = null; // meilleur fournisseur trouve
+        double meilleureMoyenne; // Meilleure moyenne trouve
+        Fournisseur meilleurFournisseur = null; // Meilleur fournisseur trouve
 
         while (!fournisseurs.isEmpty()) {
-            meilleurMoyenne = 0;
-            
-            // Trouve le fournisseur avec la meilleur moyenne
+            meilleureMoyenne = 0;
+
+            // Trouve le fournisseur avec la meilleure moyenne
             for (int i = 0; i < fournisseurs.size(); i++) {
-                if (fournisseurs.get(i).evaluationMoyenne() >= meilleurMoyenne) {
-                    meilleurMoyenne = fournisseurs.get(i).evaluationMoyenne();
+                if (fournisseurs.get(i).evaluationMoyenne() >= meilleureMoyenne) {
+                    meilleureMoyenne = fournisseurs.get(i).evaluationMoyenne();
                     meilleurFournisseur = fournisseurs.get(i);
                 }
             }
+            // Ajoute au resultat trie, efface de la liste dorigine et loop 
+            // pour trouver prochaine meilleure moyenne.
             sortedFournisseurs.add(meilleurFournisseur);
             fournisseurs.remove(meilleurFournisseur); // Retire le fournisseur traite de la liste
         }
