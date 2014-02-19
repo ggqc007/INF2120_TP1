@@ -1,15 +1,19 @@
-
 /**
  * INF2120 - Groupe 10 Professeur: Melanie Lord
  *
  * @author Guillaume Gagnon
+ * Code Permanent: GAGG15048002
+ * Courriel: gagnon.guillaume.5@courrier.uqam.ca
  * @version 2014-02-12
  *
- * Description de la classe: !!!!!!!!!!!!!
- *
- * Informations sur l'etudiant: Gagnon Guillaume GAGG15048002
- * gagnon.guillaume.5@courrier.uqam.ca
+ * Description de la classe: Cette classe met en relation les consommateurs et
+ * les fournisseurs. Elle permet, entre autres, a un utilisateur de s’inscrire au
+ * site dans le but de consommer des produits vendus par des fournisseurs ou de 
+ * vendre des produits aux consommateurs. Elle fournit aussi des services de 
+ * recommandations (d’utilisateurs et de produits) ainsi que des services de
+ * recherche de produits. 
  */
+
 import java.util.ArrayList;
 
 public class Amizone {

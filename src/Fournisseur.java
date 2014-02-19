@@ -1,16 +1,15 @@
-
 /**
  * INF2120 - Groupe 10 Professeur: Melanie Lord
  *
  * @author Guillaume Gagnon
+ * Code Permanent: GAGG15048002
+ * Courriel: gagnon.guillaume.5@courrier.uqam.ca
  * @version 2014-02-12
  *
  * Description de la classe: La classe Fournisseur est une classe concrete qui
  * herite de la classe Utilisateur.
- *
- * Informations sur l'etudiant: Gagnon Guillaume GAGG15048002
- * gagnon.guillaume.5@courrier.uqam.ca
  */
+
 public class Fournisseur extends Utilisateur {
 
     /**
