@@ -11,6 +11,9 @@
  * gagnon.guillaume.5@courrier.uqam.ca
  */
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Amizone {
 
@@ -122,7 +125,7 @@ public class Amizone {
         } else {
             String[] profilConsommateur = consommateur.compilerProfil();
             Produit[] produitsFournisseur = fournisseur.getProduits();
-            
+
             if (profilConsommateur != null) {
                 for (int i = 0; i < produitsFournisseur.length; i++) {
                     if (produitsFournisseur[i] instanceof Produit
@@ -157,7 +160,7 @@ public class Amizone {
             Consommateur consommateur, int codeProduit, int quantite)
             throws Exception {
         Produit produitTransige = fournisseur.obtenirProduit(codeProduit);
-        
+
         if (produitTransige == null) {
             throw new Exception(Utilisateur.MSG_ERR_VENTE_PROD);
         } else if (quantite <= 0 || quantite > produitTransige.getQuantite()) {
@@ -207,7 +210,6 @@ public class Amizone {
                 }
             }
         }
-
         return resultatRech;
     }
 
@@ -239,9 +241,8 @@ public class Amizone {
 
         // Mise en ordre des Fournisseur en fonction de l'evaluation
         if (fournisseursAvecLeProduit.size() > 0) {
-            sortUtilisateursParEval(fournisseursAvecLeProduit);
+            fournisseursAvecLeProduit = sortUtilisateursParEval(fournisseursAvecLeProduit);
         }
-
         return fournisseursAvecLeProduit;
     }
 
@@ -385,11 +386,11 @@ public class Amizone {
      */
     private boolean rechStringDansDescriptionProduit(Produit produit, String motCle) {
         boolean trouve = false;
-        String descriptionProduit = produit.getDescription().toLowerCase();
-        motCle = motCle.toLowerCase();
-        motCle = " " + motCle + " "; // Ajout d'espaces avant/apres pour recherche par mot
+        String descriptionProduit = produit.getDescription().toLowerCase(); // Ignore la casse pour la recherche
+        motCle = motCle.toLowerCase(); // Ignore la casse pour la recherche
+        motCle = ".*\\b" + motCle + "\\b.*"; // Utilisation regex. Ajout de frontiere au mot recherche
 
-        if (descriptionProduit.contains(motCle)) {
+        if (descriptionProduit.matches(motCle)) {
             trouve = true;
         }
         return trouve;
@@ -404,21 +405,48 @@ public class Amizone {
      */
     private ArrayList<Fournisseur> sortUtilisateursParEval(ArrayList<Fournisseur> fournisseurs) {
         ArrayList<Fournisseur> sortedFournisseurs = new ArrayList<Fournisseur>();
+        double meilleurMoyenne;
+        Fournisseur meilleurFournisseur = null;
 
-        int position; // Indice de position pour dans le tableau trie
-        double moyUtilisateurAPlacer; // Moyenne de l'utilisateur qui recherche sa position
+        while (!fournisseurs.isEmpty()) {
+            meilleurMoyenne = 0;
 
-        for (int i = 0; i < fournisseurs.size(); i++) {
-            position = 0;
-            moyUtilisateurAPlacer = fournisseurs.get(i).evaluationMoyenne();
-            // Boucle pour trouver son emplacement, ordre decroissant, dans le tableau
-            while (position < sortedFournisseurs.size()
-                    && ((Double) sortedFournisseurs.get(position).evaluationMoyenne()).compareTo(moyUtilisateurAPlacer) > 0) {
-                position = position + 1;
+            for (int i = 0; i < fournisseurs.size(); i++) {
+                if (fournisseurs.get(i).evaluationMoyenne() > meilleurMoyenne) {
+                    //System.out.println("step in!");
+                    meilleurMoyenne = fournisseurs.get(i).evaluationMoyenne();
+                    meilleurFournisseur = fournisseurs.get(i);
+                }
             }
-            sortedFournisseurs.add(position, fournisseurs.get(i));
+            sortedFournisseurs.add(meilleurFournisseur);
+            //System.out.println("meilleur aded:" + meilleurFournisseur);
+            fournisseurs.remove(meilleurFournisseur);
         }
+
         return sortedFournisseurs;
+        /*
+         int position; // Indice de position pour dans le tableau trie
+         double moyUtilisateurAPlacer; // Moyenne de l'utilisateur qui recherche sa position
+
+         System.out.println("DEBUG!!!: LISTE DES FOURNISSEURS RECU: " + fournisseurs);
+
+         for (int i = 0; i < fournisseurs.size(); i++) {
+         position = 0;
+         moyUtilisateurAPlacer = fournisseurs.get(i).evaluationMoyenne();
+
+         System.out.println("DEBUG!!!: UTILISATEUR EN COUR DE TRAITEMENT: " + fournisseurs.get(i) + " MOYENNE: " + moyUtilisateurAPlacer);
+
+         // Boucle pour trouver son emplacement, ordre decroissant, dans le tableau
+         while (position < sortedFournisseurs.size()
+         //&& ((Double)(sortedFournisseurs.get(position).evaluationMoyenne())).compareTo(moyUtilisateurAPlacer) > 0) {
+         && sortedFournisseurs.get(position).evaluationMoyenne() > moyUtilisateurAPlacer) {
+         System.out.println("step in CALISSEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+         position = position + 1;
+         }
+         sortedFournisseurs.add(position, fournisseurs.get(i));
+         }
+         */
+
     }
 
 }
