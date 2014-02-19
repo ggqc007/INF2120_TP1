@@ -11,9 +11,6 @@
  * gagnon.guillaume.5@courrier.uqam.ca
  */
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
 
 public class Amizone {
 
@@ -405,48 +402,22 @@ public class Amizone {
      */
     private ArrayList<Fournisseur> sortUtilisateursParEval(ArrayList<Fournisseur> fournisseurs) {
         ArrayList<Fournisseur> sortedFournisseurs = new ArrayList<Fournisseur>();
-        double meilleurMoyenne;
-        Fournisseur meilleurFournisseur = null;
+        double meilleurMoyenne; // meilleur moyenne trouve
+        Fournisseur meilleurFournisseur = null; // meilleur fournisseur trouve
 
         while (!fournisseurs.isEmpty()) {
             meilleurMoyenne = 0;
-
+            
+            // Trouve le fournisseur avec la meilleur moyenne
             for (int i = 0; i < fournisseurs.size(); i++) {
-                if (fournisseurs.get(i).evaluationMoyenne() > meilleurMoyenne) {
-                    //System.out.println("step in!");
+                if (fournisseurs.get(i).evaluationMoyenne() >= meilleurMoyenne) {
                     meilleurMoyenne = fournisseurs.get(i).evaluationMoyenne();
                     meilleurFournisseur = fournisseurs.get(i);
                 }
             }
             sortedFournisseurs.add(meilleurFournisseur);
-            //System.out.println("meilleur aded:" + meilleurFournisseur);
-            fournisseurs.remove(meilleurFournisseur);
+            fournisseurs.remove(meilleurFournisseur); // Retire le fournisseur traite de la liste
         }
-
         return sortedFournisseurs;
-        /*
-         int position; // Indice de position pour dans le tableau trie
-         double moyUtilisateurAPlacer; // Moyenne de l'utilisateur qui recherche sa position
-
-         System.out.println("DEBUG!!!: LISTE DES FOURNISSEURS RECU: " + fournisseurs);
-
-         for (int i = 0; i < fournisseurs.size(); i++) {
-         position = 0;
-         moyUtilisateurAPlacer = fournisseurs.get(i).evaluationMoyenne();
-
-         System.out.println("DEBUG!!!: UTILISATEUR EN COUR DE TRAITEMENT: " + fournisseurs.get(i) + " MOYENNE: " + moyUtilisateurAPlacer);
-
-         // Boucle pour trouver son emplacement, ordre decroissant, dans le tableau
-         while (position < sortedFournisseurs.size()
-         //&& ((Double)(sortedFournisseurs.get(position).evaluationMoyenne())).compareTo(moyUtilisateurAPlacer) > 0) {
-         && sortedFournisseurs.get(position).evaluationMoyenne() > moyUtilisateurAPlacer) {
-         System.out.println("step in CALISSEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-         position = position + 1;
-         }
-         sortedFournisseurs.add(position, fournisseurs.get(i));
-         }
-         */
-
     }
-
 }

@@ -41,6 +41,8 @@ public class TestsAmizone {
             = new Produit("station d'accueil pour ipod", Produit.CATEGORIES[4]);
     private static Produit p20
             = new Produit("mini speaker pour ipod", Produit.CATEGORIES[4]);
+    private static Produit p21
+            = new Produit("personne vend ca", Produit.CATEGORIES[4]); // personne vend ce produit
 
     private static Amizone amizone1;
     private static Utilisateur f0; // utilisateur null!
@@ -132,22 +134,51 @@ public class TestsAmizone {
             ((Consommateur) c10).evaluer(f2, 4);
             ((Consommateur) c10).evaluer(f3, 3);
             ((Consommateur) c10).evaluer(f5, 1);
-            
+
         } catch (Exception e) {
             System.out.println("Erreur! pendant l'evaluation des fournisseurs " + e);
         }
 
-        System.out.print("->Test liste en ordre de tous les fournisseurs...");
-        System.out.println("DEBUG: F1 moy = "+ ((Fournisseur)f1).evaluationMoyenne() +" F3 moy = "+ ((Fournisseur)f3).evaluationMoyenne() +" F5 moy = "+ ((Fournisseur)f5).evaluationMoyenne()); 
-        // ajout produit pour avoir 3 user en test pendant le debug...
+        // Ajout produit pour avoir 5 fournisseurs qui vendent l'item 13
         try {
-        ((Fournisseur) f1).ajouterNouveauProduit(p13, 26, 19.99);
+            ((Fournisseur) f1).ajouterNouveauProduit(p13, 26, 19.99);
+            ((Fournisseur) f2).ajouterNouveauProduit(p13, 26, 19.99);
+            ((Fournisseur) f4).ajouterNouveauProduit(p13, 26, 19.99); // test fournisseur avec moyenne de 0 (pas de vente)
+            amizone1.inscrireUtilisateur(f4);  // test fournisseur avec moyenne de 0 (pas de vente)
         } catch (Exception e) {
             System.out.println(e);
         }
-        
+
+        System.out.println("Voici la moyenne des Fournisseurs: \nF1 moy = " + ((Fournisseur) f1).evaluationMoyenne()
+                + "\nF2 moy = " + ((Fournisseur) f2).evaluationMoyenne()
+                + "\nF3 moy = " + ((Fournisseur) f3).evaluationMoyenne()
+                + "\nF4 moy = " + ((Fournisseur) f4).evaluationMoyenne()
+                + "\nF5 moy = " + ((Fournisseur) f5).evaluationMoyenne());
+
+        System.out.print("->Test liste en ordre de tous les fournisseurs...");
         if (!amizone1.rechercherFournisseurParEvaluation(13).isEmpty()) {
-            System.out.println("OK! " + amizone1.rechercherFournisseurParEvaluation(13));
+            System.out.println("OK! \n" + amizone1.rechercherFournisseurParEvaluation(13));
+        } else {
+            System.out.println("FAILED!!!");
+        }
+
+        System.out.print("->Test liste en ordre avec produit 3 (0 item stock par F1 .. donc n'est pas suppose etre la)...");
+        if (amizone1.rechercherFournisseurParEvaluation(3).isEmpty()) {
+            System.out.println("OK! (" + amizone1.rechercherFournisseurParEvaluation(3) + ")");
+        } else {
+            System.out.println("FAILED!!!");
+        }
+
+        System.out.print("->Test liste en ordre avec produit que personne vend (retourne liste vide)...");
+        if (amizone1.rechercherFournisseurParEvaluation(21).isEmpty()) {
+            System.out.println("OK! (" + amizone1.rechercherFournisseurParEvaluation(21) + ")");
+        } else {
+            System.out.println("FAILED!!!");
+        }
+
+        System.out.print("->Test liste en ordre avec code produit qui n'existe pas (retourne liste vide)...");
+        if (amizone1.rechercherFournisseurParEvaluation(51).isEmpty()) {
+            System.out.println("OK! (" + amizone1.rechercherFournisseurParEvaluation(51) + ")");
         } else {
             System.out.println("FAILED!!!");
         }
