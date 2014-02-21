@@ -13,6 +13,7 @@
  */
 
 public class Consommateur extends Utilisateur {
+    
     /**
      * CONSTANTES
      */
@@ -101,8 +102,8 @@ public class Consommateur extends Utilisateur {
      * n’est pas de type Fournisseur.
      * @throws java.lang.NullPointerException Si l’utilisateur passe en
      * parametre est null.
-     * @throws java.lang.Exception Si le fournisseur passe en parametre n’a
-     * jamais vendu de produit(s) a ce consommateur OU si l’evaluation passee en
+     * @throws java.lang.Exception Si 1) le fournisseur passe en parametre n’a
+     * jamais vendu de produit(s) a ce consommateur ou si 2) l’evaluation passee en
      * parametre est invalide.
      */
     @Override

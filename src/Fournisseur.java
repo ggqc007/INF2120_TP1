@@ -107,8 +107,8 @@ public class Fournisseur extends Utilisateur {
      * de type Consommateur.
      * @throws NullPointerException Si l’utilisateur passe en parametre est
      * null.
-     * @throws Exception Si le consommateur passe en parametre n’a jamais achete
-     * de produit(s) de ce fournisseur OU si l’evaluation passee en parametre
+     * @throws Exception Si 1) le consommateur passe en parametre n’a jamais achete
+     * de produit(s) de ce fournisseur ou si 2) l’evaluation passee en parametre
      * est invalide.
      */
     @Override

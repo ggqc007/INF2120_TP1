@@ -14,7 +14,7 @@
  */
 
 public abstract class Utilisateur {
-
+    
     /**
      * CONSTANTES
      */
@@ -120,8 +120,8 @@ public abstract class Utilisateur {
      * qui l’evalue ou lorsque 2) l’évaluation donnée en paramètre n’est pas
      * valide.
      *
-     * @throws java.lang.Exception Si evaluation donnee en parametre n’est pas
-     * valide ou l’utilisateur evalue n’a jamais conclu de transaction avec
+     * @throws java.lang.Exception Si 1) evaluation donnee en parametre n’est pas
+     * valide ou si 2) l’utilisateur evalue n’a jamais conclu de transaction avec
      * l’utilisateur qui l’evalue.
      */
     public abstract void evaluer(Utilisateur user, int evalScore) throws Exception;
