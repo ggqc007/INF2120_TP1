@@ -34,8 +34,8 @@ public abstract class Utilisateur {
     public static final String MSG_ERR_ACHAT = "Erreur, ce produit n'est vendu par "
             + "aucun fournisseur.";
 
-    private static final int EVAL_MIN = 1;
-    private static final int EVAL_MAX = 5;
+    public static final int EVAL_MIN = 1; // Note d'evaluation minimum
+    public static final int EVAL_MAX = 5; // Note d'evaluation maximum
     // Longueur des tableaux
     public static final int LONG_TAB = 100; // Longueur des tableaux
 

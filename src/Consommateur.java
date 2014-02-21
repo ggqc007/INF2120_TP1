@@ -15,12 +15,6 @@
 public class Consommateur extends Utilisateur {
     
     /**
-     * CONSTANTES
-     */
-    private static final int EVAL_MIN = 1; // Note d'evaluation minimum
-    private static final int EVAL_MAX = 5; // Note d'evaluation maximum
-
-    /**
      * ATTRIBUTS D'INSTANCE
      */
     private Produit[] achats; // Tableau des produits achetes par ce consommateur
@@ -111,7 +105,7 @@ public class Consommateur extends Utilisateur {
             throw new NullPointerException();
         } else if (!(fournisseur instanceof Fournisseur)) {
             throw new ClassCastException();
-        } else if (evalScore < EVAL_MIN || evalScore > EVAL_MAX) {
+        } else if (evalScore < Utilisateur.EVAL_MIN || evalScore > Utilisateur.EVAL_MAX) {
             throw new Exception(Utilisateur.MSG_ERR_EVAL_3);
         } else if (!(TabUtils.elemEstDansTab(fournisseur.getId(), fournisseurs()))) {
             // Recherche dans tab pour une historique de transaction...

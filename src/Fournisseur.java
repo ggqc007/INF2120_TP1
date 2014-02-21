@@ -15,12 +15,6 @@
 public class Fournisseur extends Utilisateur {
 
     /**
-     * CONSTANTES
-     */
-    private static final int EVAL_MIN = 1; // Note d'evaluation minimum
-    private static final int EVAL_MAX = 5; // Note d'evaluation maximum
-
-    /**
      * ATTRIBUTS D'INSTANCE
      */
     private Produit[] produits; // Tableau des produits vendus par ce fournisseur
@@ -116,7 +110,7 @@ public class Fournisseur extends Utilisateur {
             throw new NullPointerException();
         } else if (!(consommateur instanceof Consommateur)) {
             throw new ClassCastException();
-        } else if (evalScore < EVAL_MIN || evalScore > EVAL_MAX) {
+        } else if (evalScore < Utilisateur.EVAL_MIN || evalScore > Utilisateur.EVAL_MAX) {
             throw new Exception(Utilisateur.MSG_ERR_EVAL_3);
         } else if (!(TabUtils.elemEstDansTab(this.getId(),
                 ((Consommateur) consommateur).fournisseurs()))) {

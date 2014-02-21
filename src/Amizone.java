@@ -28,7 +28,7 @@ public class Amizone {
             = "Erreur, ce fournisseur ne vend aucun produit.";
     public final static String ERR_MSG_UTILIS_EXISTANT
             = "Erreur, cet utilisateur existe deja.";
-    private final static int QTY_MIN_STOCK_AJOUT_FOURNISSEUR = 1; // Quantite min
+    public final static int QTY_MIN_STOCK_AJOUT_FOURNISSEUR = 1; // Quantite min
     // d'un produit en inventaire a vendre pour permettre l'inscription d'un nouveau
     // fournisseur.
 
