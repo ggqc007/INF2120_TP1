@@ -1,5 +1,6 @@
 /**
- * INF2120 - Groupe 10 Professeur: Melanie Lord
+ * INF2120 - Groupe 10
+ * Professeur: Melanie Lord
  *
  * @author Guillaume Gagnon
  * Code Permanent: GAGG15048002
@@ -7,7 +8,8 @@
  * @version 2014-02-12
  *
  * Description de la classe: La classe Fournisseur est une classe concrete qui
- * herite de la classe Utilisateur.
+ * herite de la classe Utilisateur. C'est cette classe qui definie un Fournisseur
+ * du site Amizone.
  */
 
 public class Fournisseur extends Utilisateur {
@@ -82,7 +84,7 @@ public class Fournisseur extends Utilisateur {
                     && produits[i].getQuantite() > 0) {
                 // Alors on ajoute la categorie au tableau!
                 produitsEnVente[nbrProduitsEnVente] = produits[i].getCategorie();
-                nbrProduitsEnVente = nbrProduitsEnVente + 1;
+                nbrProduitsEnVente++;
             }
         }
         // Ajuste longueur du tab ou mise a null avant retour
@@ -120,7 +122,7 @@ public class Fournisseur extends Utilisateur {
         } else if (!(TabUtils.elemEstDansTab(this.getId(),
                 ((Consommateur) consommateur).fournisseurs()))) {
             // Si n'est pas dans tableau... cast car consommateur en parametre
-            // est de type Utilisateur donc methode fournisseurs() n'etait pas visible...
+            // est de type Utilisateur donc methode fournisseurs() n'est pas visible...
             throw new Exception(Utilisateur.MSG_ERR_EVAL_1);
         } else {
             consommateur.ajouterEvaluation(evalScore);
@@ -153,8 +155,8 @@ public class Fournisseur extends Utilisateur {
      *
      * @throws ExceptionProduitInvalide Si le produit donne en parametre est
      * null.
-     * @throws Exception Si la quantite en stock donnee est plus petite ou egale
-     * a 0 OU si le prix de vente donne est plus petit ou egal à 0 OU si le
+     * @throws Exception Si 1) la quantite en stock donnee est plus petite ou egale
+     * a 0 ou si 2) le prix de vente donne est plus petit ou egal à 0 ou si 3) le
      * produit donne en parametre existe deja dans le tableau des produits de ce
      * fournisseur.
      */
@@ -174,7 +176,7 @@ public class Fournisseur extends Utilisateur {
             produits[nbrProduits].setQuantite(quantite);
             produits[nbrProduits].setPrix(prix);
 
-            nbrProduits = nbrProduits + 1;
+            nbrProduits++;
         }
     }
 
@@ -208,8 +210,8 @@ public class Fournisseur extends Utilisateur {
      * @param quantite La quantite vendue qu’on veut soustraire a la quantite en
      * stock.
      *
-     * @throws Exception Si le code du produit donne ne correspond a aucun des
-     * produits vendus par ce fournisseur OU si la quantite vendue donnee est
+     * @throws Exception Si 1) le code du produit donne ne correspond a aucun des
+     * produits vendus par ce fournisseur ou si 2) la quantite vendue donnee est
      * plus petite ou egale a 0 ou si elle est plus grande que la quantite en
      * stock du produit ayant le code donne.
      */
@@ -224,6 +226,7 @@ public class Fournisseur extends Utilisateur {
             }
         }
 
+        // Traite Exception en fonction du resultat de la recherche
         if (produitTrouve == null) {
             throw new Exception(Utilisateur.MSG_ERR_VENTE_PROD);
         } else if (quantite <= 0 || quantite > produitTrouve.getQuantite()) {

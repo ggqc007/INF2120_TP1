@@ -1,5 +1,6 @@
 /**
- * INF2120 - Groupe 10 Professeur: Melanie Lord
+ * INF2120 - Groupe 10
+ * Professeur: Melanie Lord
  *
  * @author Guillaume Gagnon
  * Code Permanent: GAGG15048002
@@ -7,11 +8,11 @@
  * @version 2014-02-12
  *
  * Description de la classe: La classe Consommateur est une classe concrete qui
- * herite de la classe Utilisateur.
+ * herite de la classe Utilisateur. C'est cette classe qui definie un Consommateur
+ * du site Amizone.
  */
 
 public class Consommateur extends Utilisateur {
-
     /**
      * CONSTANTES
      */
@@ -78,7 +79,7 @@ public class Consommateur extends Utilisateur {
             if (achats[i] instanceof Produit
                     && !TabUtils.elemEstDansTab(achats[i].getCategorie(), categoriesAchete)) {
                 categoriesAchete[categoriesUniqueTrouve] = achats[i].getCategorie();
-                categoriesUniqueTrouve = categoriesUniqueTrouve + 1;
+                categoriesUniqueTrouve++;
             }
         }
         // Mise a null si rien trouve ou ajuste longueur du tableau avant le retour...
@@ -136,12 +137,13 @@ public class Consommateur extends Utilisateur {
      * METHODES D'INSTANCE PUBLIQUES
      */
     /**
-     * Cette methode consiste a ajouter un produit au tableau des achats.             !!!!!!!!!!!!!!!!!!! a ajoute UNE COPIE du produit??????
+     * Cette methode consiste a ajouter une copie du produit au tableau des achats.
+     * De plus, la copie de ce produit contiendra la quantite achete.
      *
      * @param produit Le produit a ajouter (Type Produit).
      * @param quantite La quantite achetee.
      * @throws ExceptionProduitInvalide Si le produit donne est null.
-     * @throws Exception Si le produit n’est vendu par aucun fournisseur OU si
+     * @throws Exception Si 1) le produit n’est vendu par aucun fournisseur, si 2)
      * la quantite achetee est plus petite ou egale a 0 ou si elle est plus
      * grande que la quantite en stock du produit.
      */
@@ -153,10 +155,10 @@ public class Consommateur extends Utilisateur {
         } else if (quantite <= 0 || quantite > produit.getQuantite()) {
             throw new Exception(Utilisateur.MSG_ERR_QTE);
         } else {
-            // On ajoute une copie du produit!
+            // On ajoute une copie du produit avec la quantite achete!
             achats[nbrAchats] = new Produit(produit);
             achats[nbrAchats].setQuantite(quantite);
-            nbrAchats = nbrAchats + 1;
+            nbrAchats++;
         }
     }
 
@@ -173,11 +175,11 @@ public class Consommateur extends Utilisateur {
         int nbrFournisseurUtilise = 0;
 
         for (int i = 0; i < achats.length; i++) {
-            // Ajoute les id fournisseurs des produits si pas deja presents
+            // Ajoute les id fournisseurs des produits si pas deja presents dans tabFournisseursUtilise
             if (achats[i] instanceof Produit
                     && !(TabUtils.elemEstDansTab(achats[i].getIdFournisseur(), tabFournisseursUtilise))) {
                 tabFournisseursUtilise[nbrFournisseurUtilise] = achats[i].getIdFournisseur();
-                nbrFournisseurUtilise = nbrFournisseurUtilise + 1;
+                nbrFournisseurUtilise++;
             }
         }
         // Ajuste longueur du tab ou mise a null avant retour
@@ -209,4 +211,5 @@ public class Consommateur extends Utilisateur {
     public int getNbrAchats() {
         return nbrAchats;
     }
+    
 }

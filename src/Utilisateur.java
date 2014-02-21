@@ -1,5 +1,6 @@
 /**
- * INF2120 - Groupe 10 Professeur: Melanie Lord
+ * INF2120 - Groupe 10
+ * Professeur: Melanie Lord
  *
  * @author Guillaume Gagnon
  * Code Permanent: GAGG15048002
@@ -99,24 +100,24 @@ public abstract class Utilisateur {
      * METHODES ABSTRAITES
      */
     /**
-     * Cette méthode retourne un tableau de type String représentant le profil
-     * de l’utilisateur et ne prend aucun paramètre.
+     * Cette méthode retourne un tableau de type String representant le profil
+     * de l’utilisateur et ne prend aucun parametre.
      *
-     * @return Tableau de type String représentant le profil de l’utilisateur.
+     * @return Tableau de type String representant le profil de l’utilisateur.
      */
     public abstract String[] compilerProfil();
 
     /**
      * Cette methode permet a un utilisateur d’evaluer un autre utilisateur. Une
-     * evaluation valide est une note comprise entre 1 et 5 où 5 constitue la
-     * meilleure evaluation.
+     * evaluation valide est une note comprise entre EVAL_MIN et EVAL_MAX ou 
+     * EVAL_MAX constitue la meilleure evaluation.
      *
      * @param user L’utilisateur evalue (type Utilisateur).
-     * @param evalScore L’evaluation donnee à l’utilisateur (1 a 5).
+     * @param evalScore L’evaluation donnee à l’utilisateur.
      *
-     * Cette méthode leve une Exception (type Exception) lorsque 1)
-     * l’utilisateur évalué n’a jamais conclu de transaction avec l’utilisateur
-     * qui l’évalue ou lorsque 2) l’évaluation donnée en paramètre n’est pas
+     * Cette methode leve une Exception (type Exception) lorsque 1)
+     * l’utilisateur evalue n’a jamais conclu de transaction avec l’utilisateur
+     * qui l’evalue ou lorsque 2) l’évaluation donnée en paramètre n’est pas
      * valide.
      *
      * @throws java.lang.Exception Si evaluation donnee en parametre n’est pas
@@ -148,7 +149,7 @@ public abstract class Utilisateur {
      * des evaluations de cet utilisateur.
      *
      * @param evalScore Note d'evaluation
-     * @throws java.lang.Exception InvalideEvalException Si l’evaluation donnée
+     * @throws java.lang.Exception InvalideEvalException Si l’evaluation donnee
      * en parametre n’est pas valide.
      */
     public void ajouterEvaluation(int evalScore) throws Exception {
@@ -202,7 +203,7 @@ public abstract class Utilisateur {
     /**
      * Retourne le tableau des evaluations recues.
      *
-     * @return Tableau des evaluations recues.
+     * @return Tableau de type int des evaluations recues.
      */
     public int[] getEvaluations() {
         return evaluations;
