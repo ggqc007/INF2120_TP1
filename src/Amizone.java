@@ -82,7 +82,7 @@ public class Amizone {
      * base des profils des utilisateurs. Deux utilisateurs qui ont des profils
      * similaires sont potentiellement interessants l’un pour l’autre. Deux
      * utilisateurs ont des profils similaires s’ils ont au moins
-     * MIN_CATEGORIE_RECOMMAND categorie en commun dans leur profil.
+     * une categorie en commun dans leur profil.
      *
      * @param utilisateur Fournisseur ou Consommateur qui recherche un
      *        utilisateur, de type inverse au sien,avec un profile comparable.
@@ -221,14 +221,13 @@ public class Amizone {
      * Cette methode retourne une liste des fournisseurs qui vendent le produit
      * du code donne et dont la quantite (en stock) est strictement plus grande
      * que 0. De plus, les fournisseurs retournes doivent etre ordonnes selon
-     * leur evaluation (en ordre decroissant des évaluations : du meilleur (eval
-     * 5) au pire (eval 1)). Si aucun fournisseur n’est trouve, la methode
-     * retourne une liste vide.
+     * leur evaluation (en ordre decroissant des evaluations : du meilleur au pire.
+     * Si aucun fournisseur n’est trouve, la methode retourne une liste vide.
      *
      * @param codeProduit Le produit recherche.
      * @return Liste des fournisseurs avec ce produit a vendre et ordonnes selon
-     *         leur evaluation (du meilleur (eval 5) au pire (eval 1)). Si aucun
-     *         fournisseur n’est trouve, la methode retourne une liste vide.
+     *         leur evaluation (du meilleur au pire). Si aucun fournisseur
+     *         n’est trouve, la methode retourne une liste vide.
      */
     public ArrayList<Fournisseur> rechercherFournisseurParEvaluation(int codeProduit) {
         ArrayList<Fournisseur> fournisseurs = rechFournisseursDansUtilisateurs();
@@ -283,11 +282,13 @@ public class Amizone {
     }
 
     /**
-     * Methode utilitaire qui verifie si un fournisseur a un produit en stock a
-     * vendre (quantite > 0).
+     * Methode utilitaire qui verifie si un fournisseur a le nombre minimum d'un
+     * produit en stock a vendre pour l'inscription au site.
+     * (quantite >= QTY_MIN_STOCK_AJOUT_FOURNISSEUR).
      *
      * @param fournisseur Le fournisseur (Utilisateur) qui desire s'inscrire.
-     * @return Vrai si l'utilisateur a au minimum un produit en stock a vendre.
+     * @return Vrai si le Fournisseur a le minimum en inventaire d'un produit
+     *         a vendre.
      */
     private boolean fournisseurAvecProduitAVendre(Utilisateur fournisseur) {
         boolean aProduitAVendre = false;
@@ -306,8 +307,7 @@ public class Amizone {
 
     /**
      * Methode utilitaire qui recherche parmis les utilisateurs du type oppose
-     * si au moins MIN_CATEGORIE_RECOMMAND categorie est en commun avec
-     * l'utilisateur en parametre.
+     * si au moins une categorie est en commun avec l'utilisateur en parametre.
      *
      * @param utilisateur Utilisateur qui recherche des profils comparables.
      * @return Liste des utilisateurs interessants ou liste vide si aucun
@@ -316,7 +316,7 @@ public class Amizone {
     private ArrayList<Utilisateur> rechUtilisateursInteressants(Utilisateur utilisateur) {
         ArrayList<Utilisateur> utilisateursComparables = new ArrayList<Utilisateur>();
 
-        if (utilisateur instanceof Consommateur) { //TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! PEUT-ETRE POSSIBLE DE FAIRE RECHERCHE OPPOSE DU INSTANCEOF ET EVITER DE FAIRE 2 FOR
+        if (utilisateur instanceof Consommateur) {
             // Recherche dans les Fournisseurs
             for (int i = 0; i < utilisateurs.size(); i++) {
                 if (utilisateurs.get(i) instanceof Fournisseur) {
