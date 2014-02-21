@@ -29,6 +29,9 @@ public class Amizone {
     public final static String ERR_MSG_UTILIS_EXISTANT
             = "Erreur, cet utilisateur existe deja.";
     
+    // Quantite minimum pour la recommandation de produit de la methode recommanderProduits
+    public final static int QTY_MIN_RECOMMANDATION_PRODUIT = 1;
+    
     // Quantite minimum d'un produit en inventaire a vendre pour permettre 
     // l'inscription d'un nouveau fournisseur.
     public final static int QTY_MIN_STOCK_AJOUT_FOURNISSEUR = 1;
@@ -70,8 +73,9 @@ public class Amizone {
      * @param utilisateur Utilisateur a ajouter.
      * @throws Exception Si 1) l’utilisateur donne est null ou si 2) l’utilisateur
      *         donne est un fournisseur (type Fournisseur) et qu’il ne vend aucun
-     *         produit dont la quantite est strictement plus grande que 0 ou si 3)
-     *         l’utilisateur donne est deja dans la liste des utilisateurs d’Amizone.
+     *         produit dont la quantite est plus grande ou egal a 
+     *         QTY_MIN_STOCK_AJOUT_FOURNISSEUR ou si 3)l’utilisateur donne est 
+     *         deja dans la liste des utilisateurs d’Amizone.
      */
     public void inscrireUtilisateur(Utilisateur utilisateur) throws Exception {
         if (utilisateur == null) {
@@ -116,7 +120,8 @@ public class Amizone {
     }
 
     /**
-     * Cette methode retourne une liste de tous les produits vendus par le
+     * Cette methode retourne une liste de tous les produits d'une quantite egal
+     * ou superieur a QTY_MIN_RECOMMANDATION_PRODUIT vendus par le
      * fournisseur donne qui sont potentiellement interessants pour le
      * consommateur donne. Les produits potentiellement interessants pour le
      * consommateur donne sont ceux qui possedent une categorie qui est presente
@@ -144,7 +149,7 @@ public class Amizone {
                 // Construction de la liste des produits
                 for (int i = 0; i < produitsFournisseur.length; i++) {
                     if (produitsFournisseur[i] instanceof Produit
-                            && produitsFournisseur[i].getQuantite() > 0) {
+                            && produitsFournisseur[i].getQuantite() >= QTY_MIN_RECOMMANDATION_PRODUIT) {
                         if (TabUtils.elemEstDansTab(produitsFournisseur[i].getCategorie(),
                                 profilConsommateur)) {
                             listeDesProduits.add(produitsFournisseur[i]);
@@ -232,10 +237,11 @@ public class Amizone {
 
     /**
      * Cette methode retourne une liste des fournisseurs qui vendent le produit
-     * du code donne et dont la quantite (en stock) est strictement plus grande
-     * que 0. De plus, les fournisseurs retournes doivent etre ordonnes selon
-     * leur evaluation (en ordre decroissant des evaluations : du meilleur au pire.
-     * Si aucun fournisseur n’est trouve, la methode retourne une liste vide.
+     * du code donne et dont la quantite (en stock) est plus grande ou egal a
+     * QTY_MIN_STOCK_RECH_EVAL. De plus, les fournisseurs retournes doivent etre
+     * ordonnes selon leur evaluation (en ordre decroissant des evaluations : du
+     * meilleur au pire. Si aucun fournisseur n’est trouve, la methode retourne
+     * une liste vide.
      *
      * @param codeProduit Le produit recherche.
      * @return Liste des fournisseurs avec ce produit a vendre et ordonnes selon
@@ -404,9 +410,11 @@ public class Amizone {
      */
     private boolean rechStringDansDescriptionProduit(Produit produit, String motCle) {
         boolean trouve = false;
-        String descriptionProduit = produit.getDescription().toLowerCase(); // Ignore la casse pour la recherche
-        motCle = motCle.toLowerCase(); // Ignore la casse pour la recherche
-        motCle = ".*\\b" + motCle + "\\b.*"; // Utilisation regex. Ajout de frontiere au mot recherche
+        // Ignore la casse pour la recherche
+        String descriptionProduit = produit.getDescription().toLowerCase(); 
+        motCle = motCle.toLowerCase();
+        // Utilisation regex. Ajout de frontiere au mot recherche
+        motCle = ".*\\b" + motCle + "\\b.*"; 
 
         if (descriptionProduit.matches(motCle)) {
             trouve = true;
