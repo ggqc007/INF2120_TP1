@@ -28,9 +28,21 @@ public class Amizone {
             = "Erreur, ce fournisseur ne vend aucun produit.";
     public final static String ERR_MSG_UTILIS_EXISTANT
             = "Erreur, cet utilisateur existe deja.";
-    public final static int QTY_MIN_STOCK_AJOUT_FOURNISSEUR = 1; // Quantite min
-    // d'un produit en inventaire a vendre pour permettre l'inscription d'un nouveau
-    // fournisseur.
+    
+    // Quantite minimum d'un produit en inventaire a vendre pour permettre 
+    // l'inscription d'un nouveau fournisseur.
+    public final static int QTY_MIN_STOCK_AJOUT_FOURNISSEUR = 1;
+    
+    // Quantite minimum en inventaire d'un produit pour en permettre la vente
+    public final static int QTY_MIN_STOCK_VENTE_PRODUIT = 1;
+    
+    // Quantite minimum en inventaire d'un produit pour affichage dans recherche
+    // pas mot cle.
+    public final static int QTY_MIN_STOCK_RECH_MOT = 1;
+    
+    // Quantite minimum en inventaire d'un produit pour affichage dans recherche
+    // par evaluation.
+    public final static int QTY_MIN_STOCK_RECH_EVAL = 1;
 
     /**
      * ATTRIBUTS D'INSTANCE
@@ -157,9 +169,9 @@ public class Amizone {
      * @param quantite La quantite du produit transige
      * @throws Exception Si 1) le code du produit donne ne correspond a aucun des
      *         produits vendus par le fournisseur donne ou si 2) la quantite donnee
-     *         est plus petite ou egale a 0 ou si elle est plus grande que la
-     *         quantite en stock du produit ayant le code donne, chez le fournisseur
-     *         donne.
+     *         est plus petite que QTY_MIN_STOCK_VENTE_PRODUIT ou si elle est plus
+     *         grande que la quantite en stock du produit ayant le code donne,
+     *         chez le fournisseur donne.
      */
     public void effectuerTransaction(Fournisseur fournisseur,
             Consommateur consommateur, int codeProduit, int quantite)
@@ -168,7 +180,8 @@ public class Amizone {
 
         if (produitTransige == null) {
             throw new Exception(Utilisateur.MSG_ERR_VENTE_PROD);
-        } else if (quantite <= 0 || quantite > produitTransige.getQuantite()) {
+        } else if (quantite < QTY_MIN_STOCK_VENTE_PRODUIT
+                || quantite > produitTransige.getQuantite()) {
             throw new Exception(Utilisateur.MSG_ERR_QTE);
         } else {
             // NB. consommateur.acheter doit etre traite avant fournisseur.vendre
@@ -187,11 +200,11 @@ public class Amizone {
      * description des produits est une suite de mots separes uniquement par un
      * ou des espaces (aucun signe de ponctuation) et que le mot cle donne est
      * un seul mot, sans espace. La recherche ne prend pas compte de la casse.
-     * Les produits retournes ont une quantite en stock strictement plus grande
-     * que 0. Un meme produit peut revenir plusieurs fois dans la liste
-     * retournee si celui-ci est vendu par differents fournisseurs (et qu’il
-     * correspond à la recherche, evidemment). Si aucun produit n’est trouve, la
-     * methode retourne une liste vide.
+     * Les produits retournes ont une quantite en stock plus grande ou egal a 
+     * QTY_MIN_STOCK_RECH_MOT. Un meme produit peut revenir plusieurs fois dans 
+     * la liste retournee si celui-ci est vendu par differents fournisseurs (et
+     * qu’il correspond à la recherche, evidemment). Si aucun produit n’est trouve,
+     * la methode retourne une liste vide.
      *
      * @param motCle Mot cle recherche.
      * @return Liste de Produit ou liste vide si aucun produit n'est trouve.
@@ -208,7 +221,7 @@ public class Amizone {
                 for (int j = 0; j < produitsFournisseurs.length; j++) {
                     if (produitsFournisseurs[j] instanceof Produit
                             && rechStringDansDescriptionProduit(produitsFournisseurs[j], motCle)
-                            && produitsFournisseurs[j].getQuantite() > 0) {
+                            && produitsFournisseurs[j].getQuantite() >= QTY_MIN_STOCK_RECH_MOT) {
                         resultatRech.add(produitsFournisseurs[j]);
                     }
                 }
@@ -237,7 +250,7 @@ public class Amizone {
         // la quantite minimum de 1 en inventaire.
         for (int i = 0; i < fournisseurs.size(); i++) {
             if (fournisseurs.get(i).obtenirProduit(codeProduit) != null
-                    && fournisseurs.get(i).obtenirProduit(codeProduit).getQuantite() > 0) {
+                    && fournisseurs.get(i).obtenirProduit(codeProduit).getQuantite() >= QTY_MIN_STOCK_RECH_EVAL) {
                 fournisseursAvecLeProduit.add(fournisseurs.get(i));
             }
         }

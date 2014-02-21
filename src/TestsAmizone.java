@@ -241,6 +241,14 @@ public class TestsAmizone {
         } catch (Exception e) {
             System.out.println("OK! (" + e + ")");
         }
+
+        try {
+            System.out.print("->Test vente d'un produit avec une quantite non valide (0)...");
+            amizone1.effectuerTransaction((Fournisseur) f5, (Consommateur) c6, 20, 0);
+            System.out.println("FAILED!!!");
+        } catch (Exception e) {
+            System.out.println("OK! (" + e + ")");
+        }
     }
 
     /**
