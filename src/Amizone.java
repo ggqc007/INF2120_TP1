@@ -1,10 +1,11 @@
-
 /**
- * INF2120 - Groupe 10 Professeur: Melanie Lord
+ * INF2120 - Groupe 10
+ * Professeur: Melanie Lord
  *
- * @author Guillaume Gagnon Code Permanent: GAGG15048002 Courriel:
- * gagnon.guillaume.5@courrier.uqam.ca
- * @version 2014-02-12
+ * @author Guillaume Gagnon
+ * Code Permanent: GAGG15048002
+ * Courriel: gagnon.guillaume.5@courrier.uqam.ca
+ * @version 2014-02-21
  *
  * Description de la classe: Cette classe met en relation les consommateurs et
  * les fournisseurs. Elle permet, entre autres, a un utilisateur de s’inscrire
@@ -27,7 +28,7 @@ public class Amizone {
             = "Erreur, ce fournisseur ne vend aucun produit.";
     public final static String ERR_MSG_UTILIS_EXISTANT
             = "Erreur, cet utilisateur existe deja.";
-    private final static int QTY_MIN_STOCK_AJOUT_FOURNISSEUR = 0; // Quantite min
+    private final static int QTY_MIN_STOCK_AJOUT_FOURNISSEUR = 1; // Quantite min
     // d'un produit en inventaire a vendre pour permettre l'inscription d'un nouveau
     // fournisseur.
 
@@ -292,7 +293,7 @@ public class Amizone {
         // QTY_MIN_STOCK_AJOUT_FOURNISSEUR item.
         for (int i = 0; i < tabProduitsEnVente.length && !aProduitAVendre; i++) {
             if (tabProduitsEnVente[i] instanceof Produit
-                    && tabProduitsEnVente[i].getQuantite() > QTY_MIN_STOCK_AJOUT_FOURNISSEUR) {
+                    && tabProduitsEnVente[i].getQuantite() >= QTY_MIN_STOCK_AJOUT_FOURNISSEUR) {
                 aProduitAVendre = true;
             }
         }
