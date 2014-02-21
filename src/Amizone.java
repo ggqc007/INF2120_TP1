@@ -244,7 +244,7 @@ public class Amizone {
 
         // Mise en ordre des Fournisseur en fonction de l'evaluation
         if (fournisseursAvecLeProduit.size() > 0) {
-            fournisseursAvecLeProduit = sortUtilisateursParEval(fournisseursAvecLeProduit);
+            fournisseursAvecLeProduit = triUtilisateursParEval(fournisseursAvecLeProduit);
         }
         return fournisseursAvecLeProduit;
     }
@@ -343,18 +343,20 @@ public class Amizone {
      * Methode utilitaire qui compare les profils de deux Utilisateurs et
      * retourne vrai si une categorie est en commun.
      * 
-     * @param userRecherche Utilisateur qui recherche
-     * @param userOffre Utilisateur qui offre
+     * @param utilisateurRecherche Utilisateur qui recherche
+     * @param utilisateurOffre Utilisateur qui offre
      * @return Vrai si une categorie est presente dans les 2 utilisateurs
      */
-    private boolean profilComparable(Utilisateur userRecherche, Utilisateur userOffre) {
+    private boolean profilComparable(Utilisateur utilisateurRecherche,
+            Utilisateur utilisateurOffre) {
         boolean estComparable = false;
-        String[] tabProfileUserRecherche = userRecherche.compilerProfil();
-        String[] tabProfileUserOffre = userOffre.compilerProfil();
+        String[] tabProfileUtilisateurRecherche = utilisateurRecherche.compilerProfil();
+        String[] tabProfileUtilisateurOffre = utilisateurOffre.compilerProfil();
 
-        if (tabProfileUserRecherche != null && tabProfileUserOffre != null) {
-            for (int i = 0; i < tabProfileUserRecherche.length && !estComparable; i++) {
-                if (TabUtils.elemEstDansTab(tabProfileUserRecherche[i], tabProfileUserOffre)) {
+        if (tabProfileUtilisateurRecherche != null && tabProfileUtilisateurOffre != null) {
+            for (int i = 0; i < tabProfileUtilisateurRecherche.length && !estComparable; i++) {
+                if (TabUtils.elemEstDansTab(tabProfileUtilisateurRecherche[i],
+                        tabProfileUtilisateurOffre)) {
                     estComparable = true;
                 }
             }
@@ -406,8 +408,8 @@ public class Amizone {
      * @param fournisseurs La liste de fournisseurs a trier.
      * @return La liste de fournisseurs trie.
      */
-    private ArrayList<Fournisseur> sortUtilisateursParEval(ArrayList<Fournisseur> fournisseurs) {
-        ArrayList<Fournisseur> sortedFournisseurs = new ArrayList<Fournisseur>();
+    private ArrayList<Fournisseur> triUtilisateursParEval(ArrayList<Fournisseur> fournisseurs) {
+        ArrayList<Fournisseur> fournisseursParOrdre = new ArrayList<Fournisseur>();
         double meilleureMoyenne; // Meilleure moyenne trouve
         Fournisseur meilleurFournisseur = null; // Meilleur fournisseur trouve
 
@@ -423,9 +425,9 @@ public class Amizone {
             }
             // Ajoute au resultat trie, efface de la liste dorigine et loop 
             // pour trouver prochaine meilleure moyenne.
-            sortedFournisseurs.add(meilleurFournisseur);
+            fournisseursParOrdre.add(meilleurFournisseur);
             fournisseurs.remove(meilleurFournisseur); // Retire le fournisseur traite de la liste
         }
-        return sortedFournisseurs;
+        return fournisseursParOrdre;
     }
 }

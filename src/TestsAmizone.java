@@ -110,30 +110,30 @@ public class TestsAmizone {
         // Fait evaluation par tous les consommateurs de tous les fournisseurs
         System.out.println("-> Ajout d'evaluations aux fournisseurs inscrits...");
         try {
-            ((Consommateur) c6).evaluer(f1, 1);
+            ((Consommateur) c6).evaluer(f1, 5);
             ((Consommateur) c6).evaluer(f2, 4);
             ((Consommateur) c6).evaluer(f3, 3);
-            ((Consommateur) c6).evaluer(f5, 1);
+            ((Consommateur) c6).evaluer(f5, 4);
 
             ((Consommateur) c7).evaluer(f1, 1);
             ((Consommateur) c7).evaluer(f2, 4);
             ((Consommateur) c7).evaluer(f3, 3);
-            ((Consommateur) c7).evaluer(f5, 1);
+            ((Consommateur) c7).evaluer(f5, 3);
 
-            ((Consommateur) c8).evaluer(f1, 1);
+            ((Consommateur) c8).evaluer(f1, 5);
             ((Consommateur) c8).evaluer(f2, 4);
             ((Consommateur) c8).evaluer(f3, 3);
-            ((Consommateur) c8).evaluer(f5, 1);
+            ((Consommateur) c8).evaluer(f5, 4);
 
-            ((Consommateur) c9).evaluer(f1, 1);
+            ((Consommateur) c9).evaluer(f1, 4);
             ((Consommateur) c9).evaluer(f2, 4);
             ((Consommateur) c9).evaluer(f3, 3);
-            ((Consommateur) c9).evaluer(f5, 1);
+            ((Consommateur) c9).evaluer(f5, 5);
 
             ((Consommateur) c10).evaluer(f1, 1);
             ((Consommateur) c10).evaluer(f2, 4);
             ((Consommateur) c10).evaluer(f3, 3);
-            ((Consommateur) c10).evaluer(f5, 1);
+            ((Consommateur) c10).evaluer(f5, 5);
 
         } catch (Exception e) {
             System.out.println("Erreur! pendant l'evaluation des fournisseurs " + e);
