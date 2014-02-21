@@ -115,14 +115,9 @@ public abstract class Utilisateur {
      * @param user L’utilisateur evalue (type Utilisateur).
      * @param evalScore L’evaluation donnee à l’utilisateur.
      *
-     * Cette methode leve une Exception (type Exception) lorsque 1)
-     * l’utilisateur evalue n’a jamais conclu de transaction avec l’utilisateur
-     * qui l’evalue ou lorsque 2) l’évaluation donnée en paramètre n’est pas
-     * valide.
-     *
-     * @throws java.lang.Exception Si 1) evaluation donnee en parametre n’est pas
-     * valide ou si 2) l’utilisateur evalue n’a jamais conclu de transaction avec
-     * l’utilisateur qui l’evalue.
+     * @throws Exception Si 1) evaluation donnee en parametre n’est pas valide
+     *         ou si 2) l’utilisateur evalue n’a jamais conclu de transaction
+     *         avec l’utilisateur qui l’evalue.
      */
     public abstract void evaluer(Utilisateur user, int evalScore) throws Exception;
 
@@ -149,8 +144,8 @@ public abstract class Utilisateur {
      * des evaluations de cet utilisateur.
      *
      * @param evalScore Note d'evaluation
-     * @throws java.lang.Exception InvalideEvalException Si l’evaluation donnee
-     * en parametre n’est pas valide.
+     * @throws Exception InvalideEvalException Si l’evaluation donnee en parametre
+     *         n’est pas valide.
      */
     public void ajouterEvaluation(int evalScore) throws Exception {
         if (evalScore < EVAL_MIN || evalScore > EVAL_MAX) {
@@ -253,7 +248,7 @@ public abstract class Utilisateur {
      *
      * @param autreUtilisateur utilisateur a comparer.
      * @return true si id de l'utilisateur en parametre est identique a celui de
-     * l'instance.
+     *         l'instance.
      */
     @Override
     public boolean equals(Object autreUtilisateur) {
@@ -268,7 +263,7 @@ public abstract class Utilisateur {
      * nombre de ses evaluations reçues).
      *
      * @return une representation de cet utilisateur sous forme d'une chaine de
-     * caracteres.
+     *         caracteres.
      */
     @Override
     public String toString() {

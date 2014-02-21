@@ -69,7 +69,7 @@ public class Consommateur extends Utilisateur {
      * passe.).
      *
      * @return Tableau de type String ou null si aucun produit n'a encore ete
-     * achete.
+     *         achete.
      */
     @Override
     public String[] compilerProfil() {
@@ -98,13 +98,12 @@ public class Consommateur extends Utilisateur {
      * @param fournisseur Le fournisseur evalue (type Utilisateur).
      * @param evalScore L'evaluation donnee au fournisseur.
      *
-     * @throws java.lang.ClassCastException Si l’utilisateur passe en parametre
-     * n’est pas de type Fournisseur.
-     * @throws java.lang.NullPointerException Si l’utilisateur passe en
-     * parametre est null.
-     * @throws java.lang.Exception Si 1) le fournisseur passe en parametre n’a
-     * jamais vendu de produit(s) a ce consommateur ou si 2) l’evaluation passee en
-     * parametre est invalide.
+     * @throws ClassCastException Si l’utilisateur passe en parametre n’est pas
+     *         de type Fournisseur.
+     * @throws NullPointerException Si l’utilisateur passe en parametre est null.
+     * @throws Exception Si 1) le fournisseur passe en parametre n’a jamais vendu
+     *         de produit(s) a ce consommateur ou si 2) l’evaluation passee en
+     *         parametre est invalide.
      */
     @Override
     public void evaluer(Utilisateur fournisseur, int evalScore) throws Exception {
@@ -127,7 +126,7 @@ public class Consommateur extends Utilisateur {
      * consommateur.
      *
      * @return Une representation sous forme de chaine de caracteres de ce
-     * consommateur.
+     *         consommateur.
      */
     @Override
     public String toString() {
@@ -144,9 +143,9 @@ public class Consommateur extends Utilisateur {
      * @param produit Le produit a ajouter (Type Produit).
      * @param quantite La quantite achetee.
      * @throws ExceptionProduitInvalide Si le produit donne est null.
-     * @throws Exception Si 1) le produit n’est vendu par aucun fournisseur, si 2)
-     * la quantite achetee est plus petite ou egale a 0 ou si elle est plus
-     * grande que la quantite en stock du produit.
+     * @throws Exception Si 1) le produit n’est vendu par aucun fournisseur,
+     *         si 2) la quantite achetee est plus petite ou egale a 0 ou si elle
+     *         est plus grande que la quantite en stock du produit.
      */
     public void acheter(Produit produit, int quantite) throws Exception {
         if (produit == null) {
@@ -169,7 +168,7 @@ public class Consommateur extends Utilisateur {
      * des produits.
      *
      * @return Retourne un tableau d’entiers (type Integer []) ou null si le
-     * consommateur n’a encore fait aucun achat.
+     *         consommateur n’a encore fait aucun achat.
      */
     public Integer[] fournisseurs() {
         Integer[] tabFournisseursUtilise = new Integer[Utilisateur.LONG_TAB];

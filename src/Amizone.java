@@ -56,9 +56,9 @@ public class Amizone {
      * utilisateurs d’Amizone.
      *
      * @param utilisateur Utilisateur a ajouter.
-     * @throws Exception Si l’utilisateur donne est null OU si l’utilisateur
+     * @throws Exception Si 1) l’utilisateur donne est null ou si 2) l’utilisateur
      * donne est un fournisseur (type Fournisseur) et qu’il ne vend aucun
-     * produit dont la quantite est strictement plus grande que 0 OU si
+     * produit dont la quantite est strictement plus grande que 0 ou si 3)
      * l’utilisateur donne est deja dans la liste des utilisateurs d’Amizone.
      */
     public void inscrireUtilisateur(Utilisateur utilisateur) throws Exception {
@@ -66,7 +66,8 @@ public class Amizone {
             throw new Exception(ERR_MSG_UTILIS_NULL);
         } else if (estDejaMembre(utilisateur)) {
             throw new Exception(ERR_MSG_UTILIS_EXISTANT);
-        } else if (utilisateur instanceof Fournisseur && !fournisseurAvecProduitAVendre(utilisateur)) {
+        } else if (utilisateur instanceof Fournisseur
+                && !fournisseurAvecProduitAVendre(utilisateur)) {
             throw new Exception(ERR_MSG_FOURN_AUCUN_PRODUIT);
         } else {
             utilisateurs.add(utilisateur);
@@ -128,10 +129,12 @@ public class Amizone {
             produitsFournisseur = fournisseur.getProduits();
 
             if (profilConsommateur != null) {
+                // Construction de la liste des produits
                 for (int i = 0; i < produitsFournisseur.length; i++) {
                     if (produitsFournisseur[i] instanceof Produit
                             && produitsFournisseur[i].getQuantite() > 0) {
-                        if (TabUtils.elemEstDansTab(produitsFournisseur[i].getCategorie(), profilConsommateur)) {
+                        if (TabUtils.elemEstDansTab(produitsFournisseur[i].getCategorie(),
+                                profilConsommateur)) {
                             listeDesProduits.add(produitsFournisseur[i]);
                         }
                     }
@@ -152,8 +155,8 @@ public class Amizone {
      * @param consommateur Le consommateur qui achete le Produit.
      * @param codeProduit Le code du Produit pour cette transaction.
      * @param quantite La quantite du produit transige
-     * @throws Exception Si le code du produit donne ne correspond a aucun des
-     * produits vendus par le fournisseur donne OU si la quantite donnee est
+     * @throws Exception Si 1) le code du produit donne ne correspond a aucun des
+     * produits vendus par le fournisseur donne ou si 2) la quantite donnee est
      * plus petite ou egale a 0 ou si elle est plus grande que la quantite en
      * stock du produit ayant le code donne, chez le fournisseur donne.
      */

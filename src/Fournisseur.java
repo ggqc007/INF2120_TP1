@@ -71,7 +71,7 @@ public class Fournisseur extends Utilisateur {
      * consideres pour recenser les categories.
      *
      * @return produitsEnVente Tableau contenant toutes les categories
-     * differentes recensees sur les produits vendus par ce fournisseur.
+     *         differentes recensees sur les produits vendus par ce fournisseur.
      */
     @Override
     public String[] compilerProfil() {
@@ -104,12 +104,11 @@ public class Fournisseur extends Utilisateur {
      * @param evalScore Note de l'evaluation.
      *
      * @throws ClassCastException Si l’utilisateur passe en parametre n’est pas
-     * de type Consommateur.
-     * @throws NullPointerException Si l’utilisateur passe en parametre est
-     * null.
+     *         de type Consommateur.
+     * @throws NullPointerException Si l’utilisateur passe en parametre est null.
      * @throws Exception Si 1) le consommateur passe en parametre n’a jamais achete
-     * de produit(s) de ce fournisseur ou si 2) l’evaluation passee en parametre
-     * est invalide.
+     *         de produit(s) de ce fournisseur ou si 2) l’evaluation passee en
+     *         parametre est invalide.
      */
     @Override
     public void evaluer(Utilisateur consommateur, int evalScore) throws Exception {
@@ -134,7 +133,7 @@ public class Fournisseur extends Utilisateur {
      * Fournisseur.
      *
      * @return une representation sous forme de chaine de caracteres de ce
-     * Fournisseur.
+     *         Fournisseur.
      */
     @Override
     public String toString() {
@@ -150,15 +149,14 @@ public class Fournisseur extends Utilisateur {
      *
      * @param produit Le nouveau produit à ajouter au tableau des produits.
      * @param quantite La quantite en stock initiale de ce nouveau produit a
-     * vendre.
+     *        vendre.
      * @param prix Le prix de vente de ce nouveau produit à vendre.
      *
-     * @throws ExceptionProduitInvalide Si le produit donne en parametre est
-     * null.
+     * @throws ExceptionProduitInvalide Si le produit donne en parametre est null.
      * @throws Exception Si 1) la quantite en stock donnee est plus petite ou egale
-     * a 0 ou si 2) le prix de vente donne est plus petit ou egal à 0 ou si 3) le
-     * produit donne en parametre existe deja dans le tableau des produits de ce
-     * fournisseur.
+     *         a 0 ou si 2) le prix de vente donne est plus petit ou egal à 0 ou
+     *         si 3) le produit donne en parametre existe deja dans le tableau
+     *         des produits de ce fournisseur.
      */
     public void ajouterNouveauProduit(Produit produit, int quantite, double prix)
             throws Exception {
@@ -186,7 +184,7 @@ public class Fournisseur extends Utilisateur {
      *
      * @param codeProduit Le code du produit recherche.
      * @return Le produit (type Produit) s’il a ete trouve, sinon elle retourne
-     * la valeur null.
+     *         la valeur null.
      */
     public Produit obtenirProduit(int codeProduit) {
         Produit produitTrouve = null;
@@ -206,14 +204,14 @@ public class Fournisseur extends Utilisateur {
      * Cette methode permet de diminuer la quantite en stock d’un produit vendu.
      *
      * @param codeProduit Code du produit dont on veut diminuer la quantite en
-     * stock.
+     *        stock.
      * @param quantite La quantite vendue qu’on veut soustraire a la quantite en
-     * stock.
+     *        stock.
      *
      * @throws Exception Si 1) le code du produit donne ne correspond a aucun des
-     * produits vendus par ce fournisseur ou si 2) la quantite vendue donnee est
-     * plus petite ou egale a 0 ou si elle est plus grande que la quantite en
-     * stock du produit ayant le code donne.
+     *         produits vendus par ce fournisseur ou si 2) la quantite vendue
+     *         donnee est plus petite ou egale a 0 ou si elle est plus grande que
+     *         la quantite en stock du produit ayant le code donne.
      */
     public void vendre(int codeProduit, int quantite) throws Exception {
         Produit produitTrouve = null;
