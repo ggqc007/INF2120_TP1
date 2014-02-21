@@ -36,7 +36,6 @@ public abstract class Utilisateur {
 
     public static final int EVAL_MIN = 1; // Note d'evaluation minimum
     public static final int EVAL_MAX = 5; // Note d'evaluation maximum
-    // Longueur des tableaux
     public static final int LONG_TAB = 100; // Longueur des tableaux
 
     /**
@@ -52,7 +51,7 @@ public abstract class Utilisateur {
     private String pseudo; // Le nom d'utilisateur (pseudonyme) de cet utilisateur
     private String motPasse; // Le mot de passe de cet utilisateur
     private String courriel; // Le courriel de cet utilisateur
-    private int[] evaluations; // Le tableau des evaluations reçues
+    private int[] evaluations; // Le tableau des evaluations recues
     private int nbrEval; // Le nombre d’evaluations dans le tableau evaluations 
 
     /**
@@ -100,7 +99,7 @@ public abstract class Utilisateur {
      * METHODES ABSTRAITES
      */
     /**
-     * Cette méthode retourne un tableau de type String representant le profil
+     * Cette methode retourne un tableau de type String representant le profil
      * de l’utilisateur et ne prend aucun parametre.
      *
      * @return Tableau de type String representant le profil de l’utilisateur.

@@ -15,6 +15,12 @@
 public class Consommateur extends Utilisateur {
     
     /**
+     * CONSTANTES
+     */
+    // Quantite minimum pour l'achat d'un produit
+    public static final int QTY_MIN_POUR_ACHAT = 1; 
+    
+    /**
      * ATTRIBUTS D'INSTANCE
      */
     private Produit[] achats; // Tableau des produits achetes par ce consommateur
@@ -138,15 +144,15 @@ public class Consommateur extends Utilisateur {
      * @param quantite La quantite achetee.
      * @throws ExceptionProduitInvalide Si le produit donne est null.
      * @throws Exception Si 1) le produit n’est vendu par aucun fournisseur,
-     *         si 2) la quantite achetee est plus petite ou egale a 0 ou si elle
-     *         est plus grande que la quantite en stock du produit.
+     *         si 2) la quantite achetee est plus petite ou egale a QTY_MIN_POUR_ACHAT
+     *         ou si elle est plus grande que la quantite en stock du produit.
      */
     public void acheter(Produit produit, int quantite) throws Exception {
         if (produit == null) {
             throw new ExceptionProduitInvalide();
         } else if (produit.getIdFournisseur() == 0) {
             throw new Exception(Utilisateur.MSG_ERR_ACHAT);
-        } else if (quantite <= 0 || quantite > produit.getQuantite()) {
+        } else if (quantite < QTY_MIN_POUR_ACHAT || quantite > produit.getQuantite()) {
             throw new Exception(Utilisateur.MSG_ERR_QTE);
         } else {
             // On ajoute une copie du produit avec la quantite achete!

@@ -8,11 +8,18 @@
  * @version 2014-02-12
  *
  * Description de la classe: La classe Fournisseur est une classe concrete qui
- * herite de la classe Utilisateur. C'est cette classe qui definie un Fournisseur
- * du site Amizone.
+ * herite de la classe Utilisateur. C'est cette classe qui definie un
+ * Fournisseur du site Amizone.
  */
 
 public class Fournisseur extends Utilisateur {
+
+    /**
+     * CONSTANTES
+     */
+    // Quantite en stock minimum d'un produit pour consideration dans les
+    // categories affiche de compilerProfil()
+    public static final int QTY_STOCK_MIN_COMPILER_PROFIL = 1;
 
     /**
      * ATTRIBUTS D'INSTANCE
@@ -61,8 +68,9 @@ public class Fournisseur extends Utilisateur {
      * Retourne un tableau contenant toutes les categories differentes recensees
      * sur les produits vendus par ce fournisseur (produits dans le tableau des
      * produits). Seuls les produits dont la quantite en stock (voir attribut
-     * quantite de la classe Produit) est strictement plus grande que 0 sont
-     * consideres pour recenser les categories.
+     * quantite de la classe Produit) est strictement plus grande que
+     * QTY_STOCK_MIN_COMPILER_PROFIL sont consideres pour recenser les
+     * categories.
      *
      * @return produitsEnVente Tableau contenant toutes les categories
      *         differentes recensees sur les produits vendus par ce fournisseur.
@@ -75,7 +83,7 @@ public class Fournisseur extends Utilisateur {
         for (int i = 0; i < produits.length && produits != null; i++) {
             if (produits[i] instanceof Produit
                     && !(TabUtils.elemEstDansTab(produits[i].getCategorie(), produitsEnVente))
-                    && produits[i].getQuantite() > 0) {
+                    && produits[i].getQuantite() >= QTY_STOCK_MIN_COMPILER_PROFIL) {
                 // Alors on ajoute la categorie au tableau!
                 produitsEnVente[nbrProduitsEnVente] = produits[i].getCategorie();
                 nbrProduitsEnVente++;
@@ -100,9 +108,9 @@ public class Fournisseur extends Utilisateur {
      * @throws ClassCastException Si l’utilisateur passe en parametre n’est pas
      *         de type Consommateur.
      * @throws NullPointerException Si l’utilisateur passe en parametre est null.
-     * @throws Exception Si 1) le consommateur passe en parametre n’a jamais achete
-     *         de produit(s) de ce fournisseur ou si 2) l’evaluation passee en
-     *         parametre est invalide.
+     * @throws Exception Si 1) le consommateur passe en parametre n’a jamais
+     *         achete de produit(s) de ce fournisseur ou si 2) l’evaluation passee
+     *         en parametre est invalide.
      */
     @Override
     public void evaluer(Utilisateur consommateur, int evalScore) throws Exception {
@@ -147,10 +155,10 @@ public class Fournisseur extends Utilisateur {
      * @param prix Le prix de vente de ce nouveau produit à vendre.
      *
      * @throws ExceptionProduitInvalide Si le produit donne en parametre est null.
-     * @throws Exception Si 1) la quantite en stock donnee est plus petite ou egale
-     *         a 0 ou si 2) le prix de vente donne est plus petit ou egal à 0 ou
-     *         si 3) le produit donne en parametre existe deja dans le tableau
-     *         des produits de ce fournisseur.
+     * @throws Exception Si 1) la quantite en stock donnee est plus petite ou
+     *         egale a 0 ou si 2) le prix de vente donne est plus petit ou egal 
+     *         a 0 ou si 3) le produit donne en parametre existe deja dans le
+     *         tableau des produits de ce fournisseur.
      */
     public void ajouterNouveauProduit(Produit produit, int quantite, double prix)
             throws Exception {
@@ -202,8 +210,8 @@ public class Fournisseur extends Utilisateur {
      * @param quantite La quantite vendue qu’on veut soustraire a la quantite en
      *        stock.
      *
-     * @throws Exception Si 1) le code du produit donne ne correspond a aucun des
-     *         produits vendus par ce fournisseur ou si 2) la quantite vendue
+     * @throws Exception Si 1) le code du produit donne ne correspond a aucun
+     *         des produits vendus par ce fournisseur ou si 2) la quantite vendue
      *         donnee est plus petite ou egale a 0 ou si elle est plus grande que
      *         la quantite en stock du produit ayant le code donne.
      */
@@ -233,6 +241,7 @@ public class Fournisseur extends Utilisateur {
      */
     /**
      * Retourne le tableau des produits vendus par ce fournisseur.
+     *
      * @return produits Tableau des produits vendus par ce fournisseur.
      */
     public Produit[] getProduits() {
@@ -240,8 +249,11 @@ public class Fournisseur extends Utilisateur {
     }
 
     /**
-     * Retourne Le nombre de produits vendus (presents dans le tableau des produits).
-     * @return Le nombre de produits vendus (presents dans le tableau des produits).
+     * Retourne Le nombre de produits vendus (presents dans le tableau des
+     * produits).
+     *
+     * @return Le nombre de produits vendus (presents dans le tableau des
+     *         produits).
      */
     public int getNbrProduits() {
         return nbrProduits;
