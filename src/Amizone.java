@@ -57,9 +57,9 @@ public class Amizone {
      *
      * @param utilisateur Utilisateur a ajouter.
      * @throws Exception Si 1) l’utilisateur donne est null ou si 2) l’utilisateur
-     * donne est un fournisseur (type Fournisseur) et qu’il ne vend aucun
-     * produit dont la quantite est strictement plus grande que 0 ou si 3)
-     * l’utilisateur donne est deja dans la liste des utilisateurs d’Amizone.
+     *         donne est un fournisseur (type Fournisseur) et qu’il ne vend aucun
+     *         produit dont la quantite est strictement plus grande que 0 ou si 3)
+     *         l’utilisateur donne est deja dans la liste des utilisateurs d’Amizone.
      */
     public void inscrireUtilisateur(Utilisateur utilisateur) throws Exception {
         if (utilisateur == null) {
@@ -85,10 +85,10 @@ public class Amizone {
      * MIN_CATEGORIE_RECOMMAND categorie en commun dans leur profil.
      *
      * @param utilisateur Fournisseur ou Consommateur qui recherche un
-     * utilisateur, de type inverse au sien,avec un profile comparable.
+     *        utilisateur, de type inverse au sien,avec un profile comparable.
      * @return Liste d’utilisateurs potentiellement interessants pour
-     * l’utilisateur donne. Lorsqu'aucun utilisateur de profil similaire n'est
-     * trouve, la methode retourne une liste vide.
+     *         l’utilisateur donne. Lorsqu'aucun utilisateur de profil similaire
+     *         n'est trouve, la methode retourne une liste vide.
      * @throws Exception Si l’utilisateur donne est null.
      */
     public ArrayList<Utilisateur> recommanderUtilisateurs(Utilisateur utilisateur)
@@ -113,7 +113,7 @@ public class Amizone {
      * @param fournisseur Le fournisseur
      * @param consommateur Le consommateur
      * @return Liste de tous les produits vendus par le fournisseur qui sont
-     * potentiellement interessants pour le consommateur.
+     *         potentiellement interessants pour le consommateur.
      * @throws Exception Si le fournisseur ou le consommateur donne est null.
      */
     public ArrayList<Produit> recommanderProduits(Fournisseur fournisseur,
@@ -156,9 +156,10 @@ public class Amizone {
      * @param codeProduit Le code du Produit pour cette transaction.
      * @param quantite La quantite du produit transige
      * @throws Exception Si 1) le code du produit donne ne correspond a aucun des
-     * produits vendus par le fournisseur donne ou si 2) la quantite donnee est
-     * plus petite ou egale a 0 ou si elle est plus grande que la quantite en
-     * stock du produit ayant le code donne, chez le fournisseur donne.
+     *         produits vendus par le fournisseur donne ou si 2) la quantite donnee
+     *         est plus petite ou egale a 0 ou si elle est plus grande que la
+     *         quantite en stock du produit ayant le code donne, chez le fournisseur
+     *         donne.
      */
     public void effectuerTransaction(Fournisseur fournisseur,
             Consommateur consommateur, int codeProduit, int quantite)
@@ -226,8 +227,8 @@ public class Amizone {
      *
      * @param codeProduit Le produit recherche.
      * @return Liste des fournisseurs avec ce produit a vendre et ordonnes selon
-     * leur evaluation (du meilleur (eval 5) au pire (eval 1)). Si aucun
-     * fournisseur n’est trouve, la methode retourne une liste vide.
+     *         leur evaluation (du meilleur (eval 5) au pire (eval 1)). Si aucun
+     *         fournisseur n’est trouve, la methode retourne une liste vide.
      */
     public ArrayList<Fournisseur> rechercherFournisseurParEvaluation(int codeProduit) {
         ArrayList<Fournisseur> fournisseurs = rechFournisseursDansUtilisateurs();
@@ -310,7 +311,7 @@ public class Amizone {
      *
      * @param utilisateur Utilisateur qui recherche des profils comparables.
      * @return Liste des utilisateurs interessants ou liste vide si aucun
-     * trouve.
+     *         trouve.
      */
     private ArrayList<Utilisateur> rechUtilisateursInteressants(Utilisateur utilisateur) {
         ArrayList<Utilisateur> utilisateursComparables = new ArrayList<Utilisateur>();
